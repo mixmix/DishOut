@@ -11,6 +11,10 @@ html{
     padding: 20px;
 }
 
+.header, .entry{
+  display: flex;
+  justify-content: space-around;
+}
 
 h1{
   font-family:'Roboto', sans-serif;
