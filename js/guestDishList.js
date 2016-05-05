@@ -20,6 +20,6 @@ var dishList = [
 		'<div class="dish">Desert</div>',
 		'<div class="dishname">Sorbet</div>',
 	'</div>',
-'</div>'].join()
+'</div>'].join("")
 
-modules.export = dishList
+module.exports = dishList

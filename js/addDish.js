@@ -6,8 +6,13 @@ function execute(){
   var dish = $("#dish").val()
 
 
-  $("#guestDishList").append("<div> guest name: " + guestName + " dish type" + dishType + " dish: " + dish + "</div>")
-
+  $("#guestDishList").append(
+    ['<div class="entry">',
+      '<div class="guest">' + guestName + '</div>',
+      '<div class="dish">'+ dishType + '</div>',
+      '<div class="dishname">' + dish + '</div>',
+    '</div>'].join("")
+  )
 }
 
 module.exports = {execute: execute}

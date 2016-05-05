@@ -7,7 +7,7 @@ var addDishFields = [
 		'<option value="Desert">Desert</option>',
 	'</select>',
 	'<input id="dish" type="text">',
-	'<button id="addDish">',
-'</div>'].join()
+	'<button id="addDish">Add your dish! </button>',
+'</div>'].join("")
 
-modules.export = addDishFields
+module.exports = addDishFields
