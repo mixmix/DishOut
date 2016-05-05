@@ -1,0 +1,25 @@
+var dishList = [
+'<div id="guestDishList">',
+	'<div class="header">',
+		'<div class="guest">Guest</div>',
+		'<div class="dish">Dish</div>',
+		'<div class="dishname">Dish Name</div>',
+	'</div>',
+	'<div class="entry">',
+		'<div class="guest">Brian</div>',
+		'<div class="dish">Entree</div>',
+		'<div class="dishname">Cheese & Crackers</div>',
+	'</div>',
+	'<div class="entry">',
+		'<div class="guest">Lucy</div>',
+		'<div class="dish">Main</div>',
+		'<div class="dishname">Spagbolle</div>',
+	'</div>',
+	'<div class="entry">',
+		'<div class="guest">Peter</div>',
+		'<div class="dish">Desert</div>',
+		'<div class="dishname">Sorbet</div>',
+	'</div>',
+'</div>'].join()
+
+modules.export = dishList
