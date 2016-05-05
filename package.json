@@ -2,10 +2,13 @@
   "name": "dishout",
   "version": "1.0.0",
   "description": "See readme",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "5.11.0"
   },
   "repository": {
     "type": "git",
