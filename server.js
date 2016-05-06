@@ -110,7 +110,7 @@ app.post('/event', function(req, res) {
       location: req.body.location
     },
     (err, id) => {
-      console.log('event successfully created, redirecting to /event/' + id)
+      console.log('Event successfully created, redirecting to /event/' + id)
       res.redirect('/event/' + id)
     })
 })

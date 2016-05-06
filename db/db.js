@@ -10,7 +10,6 @@ function createUser(name,email,password,cb){
     hashedPassword:password
   })
   .then(function(data){
-    console.log("Successfully inserted data! ", data)
     cb(null,data)
   })
   .catch(function(err){
@@ -37,7 +36,6 @@ function createEvent(event,cb){
     location:event.location
   })
   .then(function(data){
-    console.log("event created with the following id: ", data)
     cb(null,data)
   })
   .catch(function(err){
@@ -108,7 +106,6 @@ function getTenativeEvents(id, cb){
 function login(email, password, cb){
   knex.select().where("email", email).table("users")
     .then(function(data){
-      console.log("Worked, here is the data", data)
       cb(null, data[0])
     })
     .catch(function(err){
