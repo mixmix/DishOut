@@ -11,11 +11,11 @@ html
     eventsImHosting
       ul
         each val in eventsHosting
-          li= val
+          li= val.name
     br
     br
     h3 Events you are Invited to:
     eventsInvitedTo
       ul
-            each val in eventsInvitedTo
-              li= val
+        each val in eventsInvitedTo
+          li= val.name

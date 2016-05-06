@@ -28,36 +28,32 @@ app.get('/home', function(req, res){
   res.redirect('/')
 })
 
-<<<<<<< HEAD
-// USER go to users homepage
-app.get('/user/:id', function(req, res){
-  console.log("USER go to users homepage: ")
-  res.render('user_show',
-    {eventsHosting: [3,1,5],
-     eventsInvitedTo: [4,9,2]
-   })
-=======
+
 app.post('/login', function(req, res){
   console.log('/login')
   console.log("try and login via db")
+
+  console.log("req/body: ", req.body)
 
   db.login(
     req.body.email,
     req.body.password,
     (err, data) => {
       if (err) {
-        console.log("failed to login, redirected to '/'")
+        console.log("failed to login, redirected to '/'", err)
         res.redirect('/')
+        return
       }
       currentUserID = data.id
       console.log("successful login, redirected to '/user/:id'")
+      console.log("currentUserID: ", currentUserID)
       res.redirect('/user/' + data.id)
     })
 })
 
 app.post('/signup', function(req, res){
   console.log('/signup')
-  console.log("try and signup via db")
+  console.log("try and signup via db: ", req.body)
 
   db.createUser(
     req.body.name,
@@ -65,8 +61,9 @@ app.post('/signup', function(req, res){
     req.body.password,
     (err, id) => {
       if (err) {
-        console.log("failed to signup, redirected to '/'")
+        console.log("failed to signup, redirected to '/'", err)
         res.redirect('/')
+        return
       }
       currentUserID = id
       console.log("successful signup, redirected to '/user/:id'")
@@ -78,19 +75,19 @@ app.post('/signup', function(req, res){
 app.get('/user/:id', function(req, res){
   console.log('/user/:id')
   console.log('USER go to users homepage: ', req.body, req.params)
+  console.log('currentUserID: ', currentUserID)
 
-  db.getHostedEvents(currentUserID,
+  db.getHostedEvents(req.params.id,
     (err, host) => {
-      db.getTenativeEvents(currentUserID,
+      db.getTenativeEvents(req.params.id,
         (err, guest) => {
           res.render('user_show',
             {
               eventsHosting: host,
-              eventsAttending: guest
+              eventsInvitedTo: guest
             })
         })
     })
->>>>>>> e17b3ed85578001ba0f2e3141a5caf1089a6e0c5
 })
 
 // HOST go to create new event page
@@ -113,7 +110,7 @@ app.post('/event', function(req, res) {
       location: req.body.location
     },
     (err, id) => {
-      console.log('event successfully created, redirecting to /event/' + id)
+      console.log('Event successfully created, redirecting to /event/' + id)
       res.redirect('/event/' + id)
     })
 })
