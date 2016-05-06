@@ -11,7 +11,7 @@ app.set('views', __dirname + '/public/views')
 
 app.use(express.static(__dirname + '/public'))
 
-var currentUserID
+var currentUserID = {}
 
 // STRANGER go to DISHOUT homepage
 app.get('/', function(req, res){
@@ -92,16 +92,15 @@ app.get('/event/new', function(req, res){
 })
 
 // HOST post the event host wants to create
-app.post('/event', function(req, res){
-  console.log(
-    "HOST post the event host wants to create: ")
+app.post('/event', function(req, res) {
+  console.log("HOST post the event host wants to create: ")
 
   db.createEvent({
-      req.body.name,
-      req.body.date,
-      req.body.time,
-      req.body.description,
-      req.body.location
+      name: req.body.name,
+      date: req.body.date,
+      time: req.body.time,
+      description: req.body.description,
+      location: req.body.location
     },
     (err, id) => {
       console.log('event successfully created, redirecting to /event/' + id)
