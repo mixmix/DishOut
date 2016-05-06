@@ -17,6 +17,33 @@ function createUser(name,email,password,cb){
   })
 }
 
+function getEventsAttending(id,cb){
+  knex("guests").select().where("userId",id)
+  .then(function(data){
+    cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
+}
+
+function createEvent(event,cb){
+  knex("events").insert({
+    name:event.name,
+    date:event.date,
+    time:event.time,
+    description:event.description,
+    location:event.location
+  })
+  .then(function(data){
+    console.log("event created with the following id: ", data)
+    cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
+}
+
 function getEvent(id,cb){
   knex.select().where("id",id).table("events")
   .then(function(data){
@@ -47,7 +74,7 @@ function getUserByEmail(email){
   })
 }
 
-function getEventsWhereUserIsHost(id,cb){
+function getHostedEvents(id,cb){
   knex.select().where("userId",id).table("hosts")
   .then(function(data){
     cb(null,data)
@@ -57,7 +84,7 @@ function getEventsWhereUserIsHost(id,cb){
   })
 }
 
-function getEventsWhereUserIsGuest(id,cb){
+function getTenativeEvents(id,cb){
   knex.select().where("userId",id).table("guests")
   .then(function(data){
     cb(null,data)
@@ -96,11 +123,11 @@ login("ben@scully.com","", function(err,data){
 //   console.log(data)
 // })
 
-getEventsWhereUserIsHost("1",function(err,data){
+getHostedEvents("1",function(err,data){
   console.log(data)
 })
 
-getEventsWhereUserIsGuest("1",function(err,data){
+getTenativeEvents("1",function(err,data){
   console.log(data)
 })
 
@@ -110,6 +137,23 @@ getEvent("2",function(err,data){
 
 getDishById("3",function(err,data){
   console.log(data)
+})
+
+
+var event = {
+  name:"Jim",
+  date:"15/10",
+  time:"12:00",
+  description:"day time party",
+  location:"12 jack view rd"
+}
+
+createEvent(event, function(err,data){
+  console.log(data)
+})
+
+getEventsAttending("2",function(err,data){
+  console.log("Here are the events you are attending ", data)
 })
 
 
