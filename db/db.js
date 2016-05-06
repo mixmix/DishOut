@@ -29,3 +29,18 @@ const saltRounds = 10;
       if (err) throw err
     })
   }
+
+  function login(email,password){
+    knex.select().where("email",email)
+    .then(function(data){
+      if(bcrypt.compareSync(password,data.body.hashedPassword)){
+        console.log("Password is correct")
+      }
+      else{
+        console.log("Password is wrong")
+      }
+    })
+    .catch(err){
+      if (err) throw err
+    }
+  }
