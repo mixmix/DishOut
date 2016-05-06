@@ -1,6 +1,6 @@
 html
   head
-    title Stranger Homepage
+    title GUEST view event page (event/:id)
     |   
     link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
     |   
@@ -8,6 +8,16 @@ html
     |   
     link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
   body
-    button Login
-    button Signup
+    h1 GUEST view event page (event/:id)
+    name Name: #{event.name}
+    time Time: #{event.time}
+    date Date: #{event.date}
+    description Desctipion: #{event.description}
+    location Location: #{event.location}
+    
+    hr
+    
+    ul
+      each dish in dishes
+        li= 'testingstring ' + dish
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
