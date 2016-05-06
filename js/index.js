@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $(function(){
   var addDishFields = require("./addDishFields")
   var guestDishList = require("./guestDishList")
@@ -14,3 +15,10 @@ $(function(){
   require("./addDish")
   $("#createEvent").html(createEventView)
 });
+=======
+$(init)
+
+function init () {
+  
+}
+>>>>>>> 49c7d5fabdead64ec4e1d77311c13f2255ed08e6
