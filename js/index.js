@@ -1,5 +1,5 @@
 $(init)
 
 function init () {
-  
+
 }

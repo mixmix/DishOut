@@ -27,6 +27,10 @@
     "bcrypt": "^0.8.6",
     "body-parser": "^1.15.0",
     "browserify": "^13.0.0",
+    "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "watchify": "^3.7.0",
     "express": "^4.13.4",
     "pug": "^2.0.0-alpha6",
     "pug-load": "^1.0.3",
