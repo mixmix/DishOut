@@ -14,13 +14,17 @@ html
     |
     h3 Events you are Hosting:
     |
-    div
-      h4= eventsHosting
+    eventsImHosting
+      ul
+        each val in eventsHosting
+          li= val
     br
     |
     br
     |
     h3 Events you are Invited to:
     |
-    div
-      h4= eventsInvited
+    eventsInvitedTo
+      ul
+        each val in eventsInvitedTo
+          li= val
