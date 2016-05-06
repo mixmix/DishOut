@@ -1,0 +1,57 @@
+html
+  head
+    title HOST create new event page (event/new)
+    |   
+    link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
+    |   
+    link(rel='stylesheet', type='text/css', href='../css/index.css')
+    |   
+    link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
+  body
+    h1 HOST create new event page (event/new)
+    |   
+    hr
+    |   
+    h2 Add Event Information
+    |   
+    form(action='/event', method='post')
+      | User ID:
+      br
+      |     
+      input(type='text', name='userID', placeholder='type user id here')
+      |     
+      br
+      | Event Name:
+      br
+      |     
+      input(type='text', name='eventName', placeholder='type event name here')
+      |     
+      br
+      | Date:
+      br
+      |     
+      input(type='text', name='date', placeholder='type event date here')
+      |     
+      br
+      | Time:
+      br
+      |     
+      input(type='text', name='time', placeholder='type event name here')
+      |     
+      br
+      | Description:
+      br
+      |     
+      input(type='text', name='description', placeholder='type brief event description here')
+      |     
+      br
+      | Location:
+      br
+      |     
+      input(type='text', name='location', placeholder='type event location here')
+      |     
+      br
+      |     
+      input(type='submit', value='Submit')
+
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
