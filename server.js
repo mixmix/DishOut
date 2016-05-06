@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 app.set('views', __dirname + '/public/views')
 
-app.use(express.static(__dirname + '/public'))
+// app.use(express.static(__dirname + '/public'))
 
 // STRANGER go to DISHOUT homepage
 app.get('/', function(req, res){
@@ -25,11 +25,14 @@ app.get('/home', function(req, res){
   res.redirect('/')
 })
 
-// // USER go to users homepage
-// app.get('/user/:id', function(req, res){
-//   console.log("USER go to users homepage: ")
-//   res.send('USER go to users homepage')
-// })
+// USER go to users homepage
+app.get('/user/:id', function(req, res){
+  console.log("USER go to users homepage: ")
+  res.render('user_show',
+    {eventsHosting: [3,1,5],
+     eventsInvitedTo: [4,9,2]
+   })
+})
 
 // HOST go to create new event page
 app.get('/event/new', function(req, res){

@@ -1,13 +1,21 @@
 html
   head
-    title Stranger Homepage
-    |   
-    link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
-    |   
-    link(rel='stylesheet', type='text/css', href='../css/index.css')
-    |   
-    link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
+    link(type='text/css', rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
+    link(type='text/css', rel='stylesheet', href='../css/index.css')
+    link(type='img/ico', rel='icon', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
+    title User Homepage
   body
-    button Login
-    button Signup
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
+    button Create Event
+    br
+    h3 Events you are Hosting:
+    eventsImHosting
+      ul
+        each val in eventsHosting
+          li= val
+    br
+    br
+    h3 Events you are Invited to:
+    eventsInvitedTo
+      ul
+            each val in eventsInvitedTo
+              li= val
