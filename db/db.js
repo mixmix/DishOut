@@ -27,8 +27,8 @@ function getUserByEmail(email){
   })
 }
 
-function getEventsWhereUserIsHost(name,cb){
-  knex.select().where("name",name).table("events")
+function getEventsWhereUserIsHost(id,cb){
+  knex.select().where("userId",id).table("hosts")
   .then(function(data){
     cb(null,data)
   })
@@ -37,7 +37,14 @@ function getEventsWhereUserIsHost(name,cb){
   })
 }
 
-function getEventsWhereUserIsGuest(userId){
+function getEventsWhereUserIsGuest(id,cb){
+  knex.select().where("userId",id).table("guests")
+  .then(function(data){
+    cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
 
 }
 
@@ -58,15 +65,19 @@ function login(email,password,cb){
 
 module.exports = {createUser:createUser,getUserByEmail:getUserByEmail,login:login}
 
-login("ben@scully.com","", function(err,data){
+// login("ben@scully.com","", function(err,data){
+//   console.log(data)
+// })
+
+// createUser("Jack","Happy@mormon.org","123",function(err,data){
+//   console.log(data)
+// })
+
+getEventsWhereUserIsHost("1",function(err,data){
   console.log(data)
 })
 
-createUser("Jack","Happy@mormon.org","123",function(err,data){
-  console.log(data)
-})
-
-getEventsWhereUserIsHost("Bill Clinton",function(err,data){
+getEventsWhereUserIsGuest("1",function(err,data){
   console.log(data)
 })
 
