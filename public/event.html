@@ -1,0 +1,60 @@
+<html>
+<head>
+  <title>DishOut</title>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
+  <link rel="stylesheet" type="text/css" href="./css/index.css">
+  <link rel="icon" type="img/ico" href="http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png">
+</head>
+<body>
+  <h1>[HOST] Add Stuff To Event</h1>
+
+  <hr>
+
+  <h2>Info From Created Event</h2>
+  <form>
+    User ID:<br/>
+    <input type="text" name="userID" value="100">'
+    <br/>Event Name:<br/>
+    <input type="text" name="eventName" value="James Potluck">'
+    <br/>Date:<br/>
+    <input type="text" name="date" value="20th Sep">
+    <br/>Time:<br/>
+    <input type="text" name="time" value="6pm">
+    <br/>Description:<br/>
+    <input type="text" name="description" value="80's themed costume">
+    <br/>Location:<br/>
+    <input type="text" name="location" value="123 Fake St">
+    <br/>
+  </form>
+
+  <hr>
+
+  <h2>What Should Guests Bring?</h2>
+  <select id="courseType" name="courseType">
+    <option value="Entree">Entree</option>
+    <option value="Main">Main</option>
+    <option value="Desert">Desert</option>
+  </select>
+  <button id="addCourse">ADD Course for Guests to Bring</button>
+
+  <hr>
+
+  <h2>Who Do You Want To Invite?</h2>
+  <p>Invitation feature yet to be coded.</p>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script>
+    $("#addCourse").click( () => {
+      $.post("/decideCourse",
+      {
+        courseType: $("#courseType option:selected").text(),
+        city: "Duckburg"
+      },
+      (data, status) => {
+        console.log("trying to add course")
+        alert("Data: " + data + "\nStatus: " + status);
+      })
+    })
+  </script>
+</body>
+</html>
