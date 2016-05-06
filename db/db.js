@@ -1,15 +1,15 @@
-var knexConfig = require('./knexfile')
+var knexConfig = require('../knexfile')
 var knex = require('knex')(knexConfig[process.env.NODE_ENV || "development"])
 var bcrypt = require('bcrypt')
 const saltRounds = 10;
 
 function createUser(name,email,password,cb){
-  knex("users").insert({name:name,
+  knex("users").insert({
+    name:name,
     email:email,
     hashedPassword:password
   })
   .then(function(data){
-    console.log("Successfully inserted data! ", data)
     cb(null,data)
   })
   .catch(function(err){
@@ -36,7 +36,6 @@ function createEvent(event,cb){
     location:event.location
   })
   .then(function(data){
-    console.log("event created with the following id: ", data)
     cb(null,data)
   })
   .catch(function(err){
@@ -44,7 +43,7 @@ function createEvent(event,cb){
   })
 }
 
-function getEvent(id,cb){
+function getEvent(id, cb){
   knex.select().where("id",id).table("events")
   .then(function(data){
     cb(null,data)
@@ -56,61 +55,70 @@ function getEvent(id,cb){
 
 function getDishById(id,cb){
   knex.select().where("id",id).table("dishes")
-  .then(function(data){
-    cb(null,data)
-  })
-  .catch(function(err){
-    cb(err)
-  })
+    .then(function(data){
+      cb(null,data)
+    })
+    .catch(function(err){
+      cb(err)
+    })
 }
 
 function getUserByEmail(email){
   knex.select().where("email",email).table("users")
-  .then(function(data){
-    console.log("Here is the users data: ", data)
-  })
-  .catch(function(err){
-    if (err) throw err
-  })
+    .then(function(data){
+      console.log("Here is the users data: ", data)
+    })
+    .catch(function(err){
+      if (err) throw err
+    })
 }
 
-function getHostedEvents(id,cb){
-  knex.select().where("userId",id).table("hosts")
-  .then(function(data){
-    cb(null,data)
-  })
-  .catch(function(err){
-    cb(err)
-  })
+function getHostedEvents(id, cb){
+  knex.select().where("userId", id).table("hosts")
+    .then(function(data){
+      Promise.all(data.map(function(d) {
+        return knex.select().where("id", d.eventId).table("events")
+      }))
+        .then(function (data) {
+          cb(null, data.map(d => d[0]))
+        })
+    })
+    .catch(function(err){
+      cb(err)
+    })
 }
 
-function getTenativeEvents(id,cb){
+function getTenativeEvents(id, cb){
   knex.select().where("userId",id).table("guests")
-  .then(function(data){
-    cb(null,data)
-  })
-  .catch(function(err){
-    cb(err)
-  })
-
+    .then(function(data){
+      Promise.all(data.map(function(d) {
+        return knex.select().where("id", d.eventId).table("events")
+      }))
+        .then(function (data) {
+          cb(null, data.map(d => d[0]))
+        })
+    })
+    .catch(function(err){
+      cb(err)
+    })
 }
 
-function login(email,password,cb){
-  knex.select().where("email",email).table("users")
-  .then(function(data){
-    console.log("Worked, here is the data", data)
-    cb(null,data[0])
-  })
-  .catch(function(err){
-    cb(err)
-  })
-  return "hello"
+function login(email, password, cb){
+  knex.select().where("email", email).table("users")
+    .then(function(data){
+      cb(null, data[0])
+    })
+    .catch(function(err){
+      cb(err)
+    })
 }
 
 module.exports = {
   createUser: createUser,
   getUserByEmail: getUserByEmail,
-  login: login
+  login: login,
+  getHostedEvents: getHostedEvents,
+  getTenativeEvents: getTenativeEvents
 }
 
 // login("ben@scully.com","", function(err,data){

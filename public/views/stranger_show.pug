@@ -9,9 +9,9 @@ html
     br
     .login
     h3 Login to DishOut
-    form(method='post', action='/user/:id')
+    form(method='post', action='/login')
       p
-        input(type='text', name='login', value='', placeholder='Email')
+        input(type='text', name='email', value='', placeholder='Email')
       p
         input(type='password', name='password', value='', placeholder='Password')
       p.submit
@@ -22,7 +22,7 @@ html
       p
         input(type='text', name='name', value='', placeholder='Name')
       p
-        input(type='text', name='login', value='', placeholder='Email')
+        input(type='text', name='email', value='', placeholder='Email')
       p
         input(type='password', name='password', value='', placeholder='Password')
       p.submit
