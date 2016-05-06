@@ -28,15 +28,7 @@ app.get('/home', function(req, res){
   res.redirect('/')
 })
 
-<<<<<<< HEAD
-// USER go to users homepage
-app.get('/user/:id', function(req, res){
-  console.log("USER go to users homepage: ")
-  res.render('user_show',
-    {eventsHosting: [3,1,5],
-     eventsInvitedTo: [4,9,2]
-   })
-=======
+
 app.post('/login', function(req, res){
   console.log('/login')
   console.log("try and login via db")
@@ -90,7 +82,6 @@ app.get('/user/:id', function(req, res){
             })
         })
     })
->>>>>>> e17b3ed85578001ba0f2e3141a5caf1089a6e0c5
 })
 
 // HOST go to create new event page
