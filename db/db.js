@@ -107,54 +107,52 @@ function login(email,password,cb){
   return "hello"
 }
 
-
-//db method for each table
-//current var to keep track of user
-
-
-
-module.exports = {createUser:createUser,getUserByEmail:getUserByEmail,login:login}
-
-login("ben@scully.com","", function(err,data){
-  console.log(data)
-})
-
-// createUser("Jack","Happy@mormon.org","123",function(err,data){
-//   console.log(data)
-// })
-
-getHostedEvents("1",function(err,data){
-  console.log(data)
-})
-
-getTenativeEvents("1",function(err,data){
-  console.log(data)
-})
-
-getEvent("2",function(err,data){
-  console.log(data)
-})
-
-getDishById("3",function(err,data){
-  console.log(data)
-})
-
-
-var event = {
-  name:"Jim",
-  date:"15/10",
-  time:"12:00",
-  description:"day time party",
-  location:"12 jack view rd"
+module.exports = {
+  createUser: createUser,
+  getUserByEmail: getUserByEmail,
+  login: login
 }
 
-createEvent(event, function(err,data){
-  console.log(data)
-})
-
-getEventsAttending("2",function(err,data){
-  console.log("Here are the events you are attending ", data)
-})
+// login("ben@scully.com","", function(err,data){
+//   console.log(data)
+// })
+//
+// // createUser("Jack","Happy@mormon.org","123",function(err,data){
+// //   console.log(data)
+// // })
+//
+// getHostedEvents("1",function(err,data){
+//   console.log(data)
+// })
+//
+// getTenativeEvents("1",function(err,data){
+//   console.log(data)
+// })
+//
+// getEvent("2",function(err,data){
+//   console.log(data)
+// })
+//
+// getDishById("3",function(err,data){
+//   console.log(data)
+// })
+//
+//
+// var event = {
+//   name:"Jim",
+//   date:"15/10",
+//   time:"12:00",
+//   description:"day time party",
+//   location:"12 jack view rd"
+// }
+//
+// createEvent(event, function(err,data){
+//   console.log(data)
+// })
+//
+// getEventsAttending("2",function(err,data){
+//   console.log("Here are the events you are attending ", data)
+// })
 
 
 
