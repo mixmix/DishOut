@@ -17,6 +17,26 @@ function createUser(name,email,password,cb){
   })
 }
 
+function getEvent(id,cb){
+  knex.select().where("id",id).table("events")
+  .then(function(data){
+    cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
+}
+
+function getDishById(id,cb){
+  knex.select().where("id",id).table("dishes")
+  .then(function(data){
+    cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
+}
+
 function getUserByEmail(email){
   knex.select().where("email",email).table("users")
   .then(function(data){
@@ -52,7 +72,7 @@ function login(email,password,cb){
   knex.select().where("email",email).table("users")
   .then(function(data){
     console.log("Worked, here is the data", data)
-    cb(null,data)
+    cb(null,data[0])
   })
   .catch(function(err){
     cb(err)
@@ -61,13 +81,16 @@ function login(email,password,cb){
 }
 
 
+//db method for each table
+//current var to keep track of user
+
 
 
 module.exports = {createUser:createUser,getUserByEmail:getUserByEmail,login:login}
 
-// login("ben@scully.com","", function(err,data){
-//   console.log(data)
-// })
+login("ben@scully.com","", function(err,data){
+  console.log(data)
+})
 
 // createUser("Jack","Happy@mormon.org","123",function(err,data){
 //   console.log(data)
@@ -78,6 +101,14 @@ getEventsWhereUserIsHost("1",function(err,data){
 })
 
 getEventsWhereUserIsGuest("1",function(err,data){
+  console.log(data)
+})
+
+getEvent("2",function(err,data){
+  console.log(data)
+})
+
+getDishById("3",function(err,data){
   console.log(data)
 })
 
