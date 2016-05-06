@@ -1,6 +1,7 @@
 var express = require('express')
 var app = express()
 var port = process.env.PORT || 8080
+var db = require(*)db
 
 app.use(express.static(__dirname + '/public'))
 
