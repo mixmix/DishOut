@@ -40,6 +40,7 @@ app.post('/login', function(req, res){
       if (err) {
         console.log("failed to login, redirected to '/'")
         res.redirect('/')
+        return
       }
       currentUserID = data.id
       console.log("successful login, redirected to '/user/:id'")
@@ -49,16 +50,17 @@ app.post('/login', function(req, res){
 
 app.post('/signup', function(req, res){
   console.log('/signup')
-  console.log("try and signup via db")
+  console.log("try and signup via db: ", req.body)
 
   db.createUser(
     req.body.name,
-    req.body.email,
+    req.body.login,
     req.body.password,
     (err, id) => {
       if (err) {
-        console.log("failed to signup, redirected to '/'")
+        console.log("failed to signup, redirected to '/'", err)
         res.redirect('/')
+        return
       }
       currentUserID = id
       console.log("successful signup, redirected to '/user/:id'")
@@ -78,7 +80,7 @@ app.get('/user/:id', function(req, res){
           res.render('user_show',
             {
               eventsHosting: host,
-              eventsAttending: guest
+              eventsInvitedTo: guest
             })
         })
     })

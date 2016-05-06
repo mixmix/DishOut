@@ -1,10 +1,11 @@
-var knexConfig = require('./knexfile')
+var knexConfig = require('../knexfile')
 var knex = require('knex')(knexConfig[process.env.NODE_ENV || "development"])
 var bcrypt = require('bcrypt')
 const saltRounds = 10;
 
 function createUser(name,email,password,cb){
-  knex("users").insert({name:name,
+  knex("users").insert({
+    name:name,
     email:email,
     hashedPassword:password
   })
@@ -110,7 +111,9 @@ function login(email,password,cb){
 module.exports = {
   createUser: createUser,
   getUserByEmail: getUserByEmail,
-  login: login
+  login: login,
+  getHostedEvents: getHostedEvents,
+  getTenativeEvents: getTenativeEvents
 }
 
 // login("ben@scully.com","", function(err,data){
