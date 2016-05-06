@@ -25,5 +25,8 @@
   "dependencies": {
     "browserify": "^13.0.0",
     "express": "^4.13.4"
+  },
+  "devDependencies": {
+    "watchify": "^3.7.0"
   }
 }
