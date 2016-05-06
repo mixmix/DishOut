@@ -1,18 +1,15 @@
-$("#addDish").click(execute)
 
-function execute(){
-  var guestName = $("#guest").val()
-  var dishType = $("#dishType").val()
-  var dish = $("#dish").val()
+var addDishFields = [
+'<div>',
+  '<input id="guest" type="text">',
+  '<select id="dishType" name="dishType">',
+    '<option value="Entree">Entree</option>',
+    '<option value="Main">Main</option>',
+    '<option value="Desert">Desert</option>',
+  '</select>',
+  '<input id="dish" type="text">',
+  '<button id="addDish">Add your dish! </button>',
+'</div>'].join("")
 
 
-  $("#guestDishList").append(
-    ['<div class="entry">',
-      '<div class="guest">' + guestName + '</div>',
-      '<div class="dish">'+ dishType + '</div>',
-      '<div class="dishname">' + dish + '</div>',
-    '</div>'].join("")
-  )
-}
-
-module.exports = {execute: execute}
+module.exports = addDishFields
