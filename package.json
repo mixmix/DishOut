@@ -7,7 +7,8 @@
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify js/index.js > public/js/bundle.js",
-    "watch-client": "watchify js/index.js -o public/js/bundle.js -dv"
+    "watch-client": "watchify js/index.js -o public/js/bundle.js -dv",
+    "knex":"knex migrate:rollback knex migrate:latest knex seed:run"
   },
   "engines": {
     "node": "5.11.0"
@@ -27,6 +28,9 @@
     "express": "^4.13.4"
   },
   "devDependencies": {
-    "watchify": "^3.7.0"
+    "watchify": "^3.7.0",
+    "express": "^4.13.4",
+    "knex": "^0.11.0",
+    "sqlite3": "^3.1.3"
   }
 }
