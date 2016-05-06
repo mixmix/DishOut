@@ -33,17 +33,20 @@ app.post('/login', function(req, res){
   console.log('/login')
   console.log("try and login via db")
 
+  console.log("req/body: ", req.body)
+
   db.login(
     req.body.email,
     req.body.password,
     (err, data) => {
       if (err) {
-        console.log("failed to login, redirected to '/'")
+        console.log("failed to login, redirected to '/'", err)
         res.redirect('/')
         return
       }
       currentUserID = data.id
       console.log("successful login, redirected to '/user/:id'")
+      console.log("currentUserID: ", currentUserID)
       res.redirect('/user/' + data.id)
     })
 })
@@ -54,7 +57,7 @@ app.post('/signup', function(req, res){
 
   db.createUser(
     req.body.name,
-    req.body.login,
+    req.body.email,
     req.body.password,
     (err, id) => {
       if (err) {
@@ -72,10 +75,11 @@ app.post('/signup', function(req, res){
 app.get('/user/:id', function(req, res){
   console.log('/user/:id')
   console.log('USER go to users homepage: ', req.body, req.params)
+  console.log('currentUserID: ', currentUserID)
 
-  db.getHostedEvents(currentUserID,
+  db.getHostedEvents(req.params.id,
     (err, host) => {
-      db.getTenativeEvents(currentUserID,
+      db.getTenativeEvents(req.params.id,
         (err, guest) => {
           res.render('user_show',
             {
