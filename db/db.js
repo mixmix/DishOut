@@ -3,21 +3,24 @@ var knex = require('knex')(knexConfig[process.env.NODE_ENV || "development"])
 var bcrypt = require('bcrypt')
 const saltRounds = 10;
 
-function createUser(name,email,password,cb){
-  bcrypt.hash(password,saltRounds,function(err,hash){
-    knex("users").insert({
-      name:name,
-      email:email,
-      hashedPassword:hash
-    })
-    .then(function(data){
-      cb(null,data[0])
-    })
-    .catch(function(err){
-      cb(err)
-    })
+function createUser(name, email, password,cb){
+  console.log("before", name, email, password)
+  bcrypt.hash(password, saltRounds,function(err, hash){
+    var obj = {
+      "name": name,
+      "email": email,
+      "hashedPassword": hash
+    }
+    console.log("after", obj)
+    knex("users").insert(obj)
+      .then(function(data){
+        console.log("asdf", data)
+        cb(null,data[0])
+      })
+      .catch(function(err){
+        cb(err)
+      })
   })
-
 }
 
 function login(email, password, cb){
@@ -89,7 +92,7 @@ function getEventByID(id, cb){
   })
 }
 
-function getDishById(id,cb){
+function getDishByDishId(id,cb){
   knex.select().where("id",id).table("dishes")
     .then(function(data){
       cb(null,data)
@@ -116,8 +119,10 @@ function getUserByEmail(email){
 }
 
 function getHostedEvents(id, cb){
+  console.log("getHostedEvents", id)
   knex.select().where("userId", id).table("hosts")
     .then(function(data){
+      console.log("fdas", data)
       Promise.all(data.map(function(d) {
         return knex.select().where("id", d.eventId).table("events")
       }))
@@ -129,6 +134,9 @@ function getHostedEvents(id, cb){
           }
           console.log("outside if?: ", events)
           cb(null, [])
+        })
+        .catch(function(err){
+          cb(err)
         })
     })
     .catch(function(err){
