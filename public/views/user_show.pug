@@ -5,7 +5,8 @@ html
     link(type='img/ico', rel='icon', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
     title User Homepage
   body
-    button Create Event
+    form(method="get" action="/event/new")
+      input(type='submit', value='Create Event')
     br
     h3 Events you are Hosting:
     eventsImHosting
