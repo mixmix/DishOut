@@ -103,8 +103,6 @@ function getDishesByEventID (eventId, cb) {
   knex.select().where('eventId', eventId).table('dishes')
     .then( (data) => cb(null, data) )
     .catch( (err) => cb(err) )
-    // .then( (data) => console.log("one dish:", data))
-    // .catch( (err) => console.log(err))
 }
 
 function getUserByEmail(email){
@@ -147,7 +145,14 @@ function getTenativeEvents(id, cb){
     })
 }
 
-
+function insertDishHost (eventId, course, cb) {
+  knex('dishes').insert({
+      'eventId': eventId,
+      'course': course
+    })
+    .then( (data) => cb(null, data))
+    .catch( (err) => cb(err) )
+}
 
 module.exports = {
   createUser: createUser,
@@ -157,7 +162,8 @@ module.exports = {
   getTenativeEvents: getTenativeEvents,
   createEvent: createEvent,
   getEventByID: getEventByID,
-  getDishesByEventID: getDishesByEventID
+  getDishesByEventID: getDishesByEventID,
+  insertDishHost: insertDishHost
 }
 
 // login("ben@scully.com","", function(err,data){

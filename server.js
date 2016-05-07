@@ -17,14 +17,14 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 app.set('views', __dirname + '/public/views')
 
-// app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'))
 
 // STRANGER go to DISHOUT homepage
 app.get('/', function(req, res){
   console.log('/')
   console.log('STRANGER to DISHOUT landing page (with login/signup)')
 
-  res.render('stranger_show')
+  res.render('index')
 })
 
 // redirect STRANGER go to DISHOUT homepage
@@ -130,7 +130,7 @@ app.post('/event', function(req, res) {
       }
       console.log('Event successfully created, redirecting to /event/' + eventId)
       db.hostEvent(eventId, req.session.userId, function(err,data){
-        res.redirect('/event/' + eventId)
+        res.redirect('/event/' + eventId + '/addinfo')
       })
     })
 })
@@ -140,7 +140,20 @@ app.get('/event/:id/addinfo', function(req, res){
   console.log('/event/:id/addinfo ', 'req.params: ', req.params)
   console.log('HOST add Dishes & invite Guests to event')
 
-  res.render('event_addinfo')
+  db.getDishesByEventID(req.params.id,
+    (err, dishes) => {
+      if (err) {
+        console.log('Failed to retrieve dishes by eventID ', err)
+        return
+      }
+      // TODO req.session.userId add inreaplacement of USERID
+      console.log("addinfo - dishes: ", dishes)
+      res.render('event_addinfo', {
+        'eventId': req.params.id,
+        'userId': 2,
+        'dishes': dishes
+      })
+    })
 })
 
 // GUEST view event page
@@ -169,6 +182,22 @@ app.get('/event/:id', function(req, res){
             dishes: dishes
           })
       })
+    })
+})
+
+// HOST add dishes they expect guests to bring
+app.post('/dish/:eventId/:userId', function(req, res){
+  console.log('POST /dish ', 'req.body: ', req.body, 'req.params: ', req.params)
+  console.log('HOST add Dishes for Guests to bring to event')
+
+  db.insertDishHost(req.params.eventId, req.body.course,
+    (err, dishId) => {
+      if (err) {
+        console.log('inserting dish as host failed', err)
+        return
+      }
+      console.log('Successfully inserted dish as host (dishId)', dishId)
+      res.redirect('/event/' + req.params.eventId + '/addinfo')
     })
 })
 

@@ -1,27 +1,39 @@
 html
   head
     title HOST add info to the new event host is creating (event/:id/addinfo)
-    |   
     link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
-    |   
     link(rel='stylesheet', type='text/css', href='../css/index.css')
-    |   
     link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
   body
     h1 HOST add info to the new event host is creating (event/:id/addinfo)  
+    
     hr 
-    h2 What Should Guests Bring?
-    p
-    h3 Select a course from the dropdown menu
-    form 
-      select
+    
+    h2 List of Dishes You Want Guests To bring
+    dishesToBring
+      ul
+        each dish in dishes
+          li= dish.course
+    
+    hr
+    
+    h3 Add a Dish You Want Guests To Bring:
+    - var dishAction = '/dish/' + eventId + "/" + userId
+    form(method="post" action=dishAction)
+      select(name="course")
         option(value='entree') Entree
         option(value='main') Main
         option(value='salad') Salad
         option(value='dessert') Dessert
-      input 
+      input(type='submit', value='Add Dish')
     //Appetizer, Soup, Fish or Pasta, Entree, Main Course, Salad, Dessert, Gift,
-    hr  
+    hr 
+     
     h2 Who Do You Want To Invite?
+    
+    hr
+    
+    form(method="get" action='/user/' + eventId)
+      input(type='submit', value='Done')
 
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
