@@ -47,16 +47,19 @@ function login(email, password, cb){
 
 function getUserByEmail(email){
   knex.select().where("email",email).table("users")
-    .then(function(data){
-      console.log("Here is the users data: ", data)
-    })
-    .catch(function(err){
-      if (err) throw err
-    })
+    .then( (data) => cb(null, data[0]) )
+    .catch( (err) => cb(err) )
+}
+
+function getUserById (userId, cb) {
+  knex.select().where("id", userId).table("users")
+    .then( (data) => cb(null, data[0]) )
+    .catch( (err) => cb(err) )
 }
 
 module.exports = {
   createUser:createUser,
   login:login,
-  getUserByEmail:getUserByEmail
+  getUserByEmail:getUserByEmail,
+  getUserById: getUserById
 }
