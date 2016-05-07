@@ -30,7 +30,7 @@ html
         p You haven't decided on any dishes for your guests to bring
     
     h3 Add a Dish You Want Guests To Bring:
-    - var dishAction = '/dish/' + eventId + "/" + userId
+    - var dishAction = '/dish/' + event.id + "/" + userId
     form(method="post" action=dishAction)
       select(name="course")
         option(value='entree') Entree

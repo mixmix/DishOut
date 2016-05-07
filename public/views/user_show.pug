@@ -24,7 +24,8 @@ html
       if hostedEvents.length
         ul
           each val in hostedEvents
-            li= val.name
+            li
+              a(href='/event/' + val.id)= val.name
       else
         p You're not hosting any events
         
@@ -35,6 +36,7 @@ html
       if guestedEvents.length
         ul
           each val in guestedEvents
-            li= val.name
+            li
+              a(href='/event/' + val.id)= val.name
       else
         p You're not invited to any events
