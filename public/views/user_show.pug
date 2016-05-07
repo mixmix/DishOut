@@ -1,9 +1,6 @@
-html
-  head
-    link(type='text/css', rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
-    link(type='text/css', rel='stylesheet', href='../css/index.css')
-    link(type='img/ico', rel='icon', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
-    title User Homepage
+extends layout
+
+block content
   body
     
     h1 User Homepage
@@ -19,24 +16,22 @@ html
     
     hr
     
-    eventsImHosting
+    eventsHosting
       h3 Events you are Hosting:
       if hostedEvents.length
-        ul
-          each val in hostedEvents
-            li
-              a(href='/event/' + val.id)= val.name
+        each event in hostedEvents
+          .event
+            a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
         p You're not hosting any events
         
     hr
 
-    eventsInvitedTo
+    eventsGuesting
       h3 Events you are Invited to:
       if guestedEvents.length
-        ul
-          each val in guestedEvents
-            li
-              a(href='/event/' + val.id)= val.name
+        each event in guestedEvents
+          .event
+            a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
         p You're not invited to any events
