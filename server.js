@@ -3,6 +3,7 @@ var bodyParser = require('body-parser')
 var app = express()
 var port = process.env.PORT || 8080
 var db = require('./db/db')
+var passport = require('passport')
 
 var session = require('express-session')
 
@@ -32,6 +33,16 @@ app.get('/home', function(req, res){
   console.log("redirecting to '/' which is the landing page")
   res.redirect('/')
 })
+
+passport.use(new Strategy({
+  clientID:process.env.FBID,
+  clientSecret:process.env.FBSECRET,
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+},
+  function(accessToken, refreshToken,profile,cb){
+    return cb(null,profile._json)
+  }
+));
 
 
 app.post('/login', function(req, res){
