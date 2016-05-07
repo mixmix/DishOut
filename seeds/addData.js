@@ -4,15 +4,15 @@ exports.seed = function(knex, Promise) {
     knex('users').del(),
 
     // user s seed
-    knex('users').insert({name: 'Bill',email:"clinton@ididnotsleepwiththatwomen.com", hashedPassword:"22"}),
-    knex('users').insert({name: 'Ezra', email:"EzraManOfGod@mormon.com", hashedPassword:"33"}),
-    knex('users').insert({name: 'Ben', email:"ben@scully.com", hashedPassword:"44"}),
-    knex('users').insert({name: 'Tom', email:"tom@hardy.com", hashedPassword:"55"}),
-    knex('users').insert({name: 'Jill', email:"jill@little.com", hashedPassword:"66"}),
-    knex('users').insert({name: 'Steve', email:"steve@jobs.com", hashedPassword:"77"}),
-    knex('users').insert({name: 'Bob', email:"bob@jones.com", hashedPassword:"88"}),
-    knex('users').insert({name: 'Harry', email:"Harry@potter.com", hashedPassword:"99"}),
-    knex('users').insert({name: 'Eve', email:"Adam@ateapple.com", hashedPassword:"00"}),
+    knex('users').insert({name: 'Bill',email:"b@b.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Ezra', email:"e@e.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Ben', email:"s@s.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Tom', email:"t@t.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Jill', email:"j@j.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Steve', email:"a@a.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Bob', email:"bob@bob.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Harry', email:"h@h.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Eve', email:"z@z.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
 
 
     // Deletes ALL existing entries
@@ -36,8 +36,6 @@ exports.seed = function(knex, Promise) {
     knex('guests').del(),
 
     //guest s seed
-    knex('guests').insert({eventId: 1, userId: }),
-    knex('guests').insert({eventId: 1, userId: }),
     knex('guests').insert({eventId: 2, userId: 4}),
     knex('guests').insert({eventId: 2, userId: 5}),
     knex('guests').insert({eventId: 2, userId: 6}),
@@ -57,26 +55,21 @@ exports.seed = function(knex, Promise) {
     knex('guests').insert({eventId: 4, userId: 7}),
     knex('guests').insert({eventId: 4, userId: 8}),
 
-
-
     // Deletes ALL existing entries
-   knex('dishes').del(),
+    knex('dishes').del(),
 
-   //guest s seed
-  knex('dishes').insert({course: "Main", name: "Steak, Eggs and Chips", eventId: 1, userId: 1}),
-  knex('dishes').insert({course: "Dessert", name: "Chocolate Cake", eventId: 1, userId: 2}),
-  knex('dishes').insert({course: "Entree", name: "Oysters", eventId: 2, userId: 4}),
-  knex('dishes').insert({course: "Main", name: "Lamb Shanks and Potato Mash", eventId: 2, userId: 5}),
-  knex('dishes').insert({course: "Salad", name: "Caeser Salad", eventId: 2, userId: 6}),
-  knex('dishes').insert({course: "Dessert", name: "Pavlova", eventId: 2, userId: 7}),
-  knex('dishes').insert({course: "Entree", name: "Cheerio Sausages", eventId: 3, userId: 1}),
-  knex('dishes').insert({course: "Main", name: "Lasagne", eventId: 3, userId: 3}),
-  knex('dishes').insert({course: "Main", name: "Chicken Wings", eventId: 3, userId: }),
-  knex('dishes').insert({course: "Dessert", name: "Ice Cream", eventId: 3, userId: }),
-  knex('dishes').insert({course: "Dessert", name: "Brownies", eventId: 3, userId: 6}),
-  knex('dishes').insert({course: "Salad", name: "Potato Salad", eventId: 3, userId: 7}),
-  knex('dishes').insert({course: "Main", name: "Fish and Chips", eventId: 4, userId: 9}),
-  knex('dishes').insert({course: "Dessert", name: "Pavlova", eventId: 4, userId: 2}),
-
-  );
-};
+    //guest s seed
+    knex('dishes').insert({course: "Main", name: "Steak, Eggs and Chips", eventId: 1, userId: 1}),
+    knex('dishes').insert({course: "Dessert", name: "Chocolate Cake", eventId: 1, userId: 2}),
+    knex('dishes').insert({course: "Entree", name: "Oysters", eventId: 2, userId: 4}),
+    knex('dishes').insert({course: "Main", name: "Lamb Shanks and Potato Mash", eventId: 2, userId: 5}),
+    knex('dishes').insert({course: "Salad", name: "Caeser Salad", eventId: 2, userId: 6}),
+    knex('dishes').insert({course: "Dessert", name: "Pavlova", eventId: 2, userId: 7}),
+    knex('dishes').insert({course: "Entree", name: "Cheerio Sausages", eventId: 3, userId: 1}),
+    knex('dishes').insert({course: "Main", name: "Lasagne", eventId: 3, userId: 3}),
+    knex('dishes').insert({course: "Dessert", name: "Brownies", eventId: 3, userId: 6}),
+    knex('dishes').insert({course: "Salad", name: "Potato Salad", eventId: 3, userId: 7}),
+    knex('dishes').insert({course: "Main", name: "Fish and Chips", eventId: 4, userId: 9}),
+    knex('dishes').insert({course: "Dessert", name: "Pavlova", eventId: 4, userId: 2})
+  )
+}
