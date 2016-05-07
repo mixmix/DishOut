@@ -66,6 +66,19 @@ function createEvent(event,cb){
   })
 }
 
+function hostEvent(eventId,userId,cb){
+  knex('hosts').insert({
+    eventId:eventId,
+    userId:userId
+  })
+  .then(function(data){
+    cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
+}
+
 function getEventByID(id, cb){
   knex.select().where("id",id).table("events")
   .then(function(data){

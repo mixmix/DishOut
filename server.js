@@ -19,8 +19,6 @@ app.set('views', __dirname + '/public/views')
 
 // app.use(express.static(__dirname + '/public'))
 
-var currentUserID = {}
-
 // STRANGER go to DISHOUT homepage
 app.get('/', function(req, res){
   console.log('/')
@@ -40,7 +38,6 @@ app.get('/home', function(req, res){
 app.post('/login', function(req, res){
   console.log('POST /login')
   console.log("try and login via db")
-
   console.log("req/body: ", req.body)
 
   db.login(
@@ -126,13 +123,15 @@ app.post('/event', function(req, res) {
       description: req.body.description,
       location: req.body.location
     },
-    (err, id) => {
+    (err, eventId) => {
       if (err) {
         console.log('Error trying to create event', err)
         return
       }
-      console.log('Event successfully created, redirecting to /event/' + id)
-      res.redirect('/event/' + id)
+      console.log('Event successfully created, redirecting to /event/' + eventId)
+      db.hostEvent(eventId, req.session.userId, function(err,data){
+        res.redirect('/event/' + eventId)
+      })
     })
 })
 
