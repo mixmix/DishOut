@@ -14,4 +14,6 @@ function hostEvent(eventId,userId,cb){
   })
 }
 
-module.exports = {hostEvent:hostEvent}
+module.exports = {
+  hostEvent: hostEvent
+}
