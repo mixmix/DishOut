@@ -1,5 +1,5 @@
 exports.up = function(knex, Promise) {
-  console.log('create table')
+  console.log('tables created')
 
   return Promise.all( [knex.schema.createTableIfNotExists('users', function(table) {
     table.increments('id')

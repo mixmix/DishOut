@@ -1,6 +1,8 @@
 var express = require('express')
 var router = express.Router()
-var db = require('../db/db')
+var events = require('../db/events')
+var hosts = require("../db/hosts")
+var dish = require("../db/dish")
 
 // Screen for creating an event
 router.get('/new', function(req, res){
@@ -13,7 +15,7 @@ router.get('/new', function(req, res){
 router.post('/', function(req, res) {
   console.log('### POST /event ')
 
-  db.createEvent({
+  events.createEvent({
       "name": req.body.name,
       "date": req.body.date,
       "time": req.body.time,
@@ -27,7 +29,7 @@ router.post('/', function(req, res) {
         return
       }
       console.log('Event successfully created', eventId, req.session.userId)
-      db.addHostOfEvent({
+      hosts.addHostOfEvent({
         'eventId': eventId,
         'userId': req.session.userId
         },
@@ -47,7 +49,7 @@ router.post('/', function(req, res) {
 router.get('/:id/addinfo', function(req, res){
   console.log('### GET /event/:id/addinfo')
 
-  db.getDishesByEventID(req.params.id,
+  dish.getDishesByEventID(req.params.id,
     (err, dishes) => {
       if (err) {
         console.log('Failed to retrieve dishes by eventID ', err)
@@ -77,7 +79,7 @@ router.get('/:id/addinfo', function(req, res){
 router.get('/:id', function(req, res){
   console.log('### GET /event/:id')
 
-  db.getEventByID(req.params.id,
+  events.getEventByID(req.params.id,
     (err, event) => {
       if (err) {
         console.log('Failed to get event by id')
@@ -85,7 +87,7 @@ router.get('/:id', function(req, res){
         return
       }
       console.log('Successfully got event', event)
-      db.getDishesByEventID(req.params.id,
+      dish.getDishesByEventID(req.params.id,
         (err, dishes) => {
           if (err) {
             console.log('Failed to get dishes by event')

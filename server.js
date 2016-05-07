@@ -2,7 +2,8 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
 var port = process.env.PORT || 8080
-var db = require('./db/db')
+var passport = require('passport')
+var Strategy = require('passport-facebook').Strategy;
 
 var basic_routes = require('./routes/basic_routes')
 var user_routes = require('./routes/user_routes')
@@ -28,6 +29,17 @@ app.use('/', basic_routes)
 app.use('/user', user_routes)
 app.use('/event', event_routes)
 app.use('/dish', dish_routes)
+
+// passport.use(new Strategy({
+//     clientID:process.env.FBID,
+//     clientSecret:process.env.FBSECRET,
+//     callbackURL: "http://localhost:3000/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken,profile,cb){
+//     return cb(null,profile._json)
+//   }
+// ))
+
 
 app.listen(port, function() {
     console.log('Our app is running on http://localhost:' + port + '\n')

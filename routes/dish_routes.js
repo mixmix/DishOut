@@ -1,12 +1,12 @@
 var express = require('express')
 var router = express.Router()
-var db = require('../db/db')
+var dish = require("../db/dish")
 
 // Add dish to event
 router.post('/:eventId/:userId', function(req, res){
   console.log('### POST /dish ', 'req.body')
 
-  db.insertDishHost(req.params.eventId, req.body.course,
+  dish.insertDishHost(req.params.eventId, req.body.course,
     (err, dishId) => {
       if (err) {
         console.log('Failed inserting dish as host', err)
