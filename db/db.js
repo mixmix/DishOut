@@ -4,17 +4,40 @@ var bcrypt = require('bcrypt')
 const saltRounds = 10;
 
 function createUser(name,email,password,cb){
-  knex("users").insert({
-    name:name,
-    email:email,
-    hashedPassword:password
+  bcrypt.hash(password,saltRounds,function(err,hash){
+    knex("users").insert({
+      name:name,
+      email:email,
+      hashedPassword:hash
+    })
+    .then(function(data){
+      cb(null,data[0])
+    })
+    .catch(function(err){
+      cb(err)
+    })
   })
-  .then(function(data){
-    cb(null,data)
-  })
-  .catch(function(err){
-    cb(err)
-  })
+
+}
+
+function login(email, password, cb){
+  knex.select().where("email", email).table("users")
+    .then(function(data){
+      console.log("here is the user's hashed password: ",data[0].hashedPassword)
+      bcrypt.compare(password , data[0].hashedPassword, function(err,response){
+        if(response){
+          console.log("successful login", response)
+          cb(null, data[0])
+        }
+        else{
+          console.log("failed login")
+          cb(err)
+        }
+      })
+    })
+    .catch(function(err){
+      cb(err)
+    })
 }
 
 function getEventsAttending(id,cb){
@@ -28,12 +51,12 @@ function getEventsAttending(id,cb){
 }
 
 function createEvent(event,cb){
-  knex("events").insert({
-    name:event.name,
-    date:event.date,
-    time:event.time,
-    description:event.description,
-    location:event.location
+  knex('events').insert({
+    'name': event.name,
+    'date': event.date,
+    'time': event.time,
+    'description': event.description,
+    'location': event.location
   })
   .then(function(data){
     cb(null,data)
@@ -43,10 +66,23 @@ function createEvent(event,cb){
   })
 }
 
-function getEvent(id, cb){
-  knex.select().where("id",id).table("events")
+function hostEvent(eventId,userId,cb){
+  knex('hosts').insert({
+    eventId:eventId,
+    userId:userId
+  })
   .then(function(data){
     cb(null,data)
+  })
+  .catch(function(err){
+    cb(err)
+  })
+}
+
+function getEventByID(id, cb){
+  knex.select().where("id",id).table("events")
+  .then(function(data){
+    cb(null,data[0])
   })
   .catch(function(err){
     cb(err)
@@ -61,6 +97,12 @@ function getDishById(id,cb){
     .catch(function(err){
       cb(err)
     })
+}
+
+function getDishesByEventID (eventId, cb) {
+  knex.select().where('eventId', eventId).table('dishes')
+    .then( (data) => cb(null, data) )
+    .catch( (err) => cb(err) )
 }
 
 function getUserByEmail(email){
@@ -79,8 +121,14 @@ function getHostedEvents(id, cb){
       Promise.all(data.map(function(d) {
         return knex.select().where("id", d.eventId).table("events")
       }))
-        .then(function (data) {
-          cb(null, data.map(d => d[0]))
+        .then(function (events) {
+          if (events[0].length) {
+            console.log("inside if?: ", events)
+            cb(null, events.map(event => event[0]))
+            return
+          }
+          console.log("outside if?: ", events)
+          cb(null, [])
         })
     })
     .catch(function(err){
@@ -103,14 +151,13 @@ function getTenativeEvents(id, cb){
     })
 }
 
-function login(email, password, cb){
-  knex.select().where("email", email).table("users")
-    .then(function(data){
-      cb(null, data[0])
+function insertDishHost (eventId, course, cb) {
+  knex('dishes').insert({
+      'eventId': eventId,
+      'course': course
     })
-    .catch(function(err){
-      cb(err)
-    })
+    .then( (data) => cb(null, data))
+    .catch( (err) => cb(err) )
 }
 
 module.exports = {
@@ -118,7 +165,12 @@ module.exports = {
   getUserByEmail: getUserByEmail,
   login: login,
   getHostedEvents: getHostedEvents,
-  getTenativeEvents: getTenativeEvents
+  getTenativeEvents: getTenativeEvents,
+  createEvent: createEvent,
+  getEventByID: getEventByID,
+  getDishesByEventID: getDishesByEventID,
+  insertDishHost: insertDishHost,
+  hostEvent: hostEvent
 }
 
 // login("ben@scully.com","", function(err,data){

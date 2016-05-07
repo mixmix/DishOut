@@ -36,6 +36,7 @@ exports.seed = function(knex, Promise) {
 
    //guest s seed
    knex('dishes').insert({course: "Main", name: "Butter chicken", eventId:1,userId:3}),
+   knex('dishes').insert({course: "Entree", name: "Cheese", eventId:1,userId:3}),
    knex('dishes').insert({course: "Main", name: "Butter chicken", eventId:2,userId:2}),
    knex('dishes').insert({course: "Main", name: "Butter chicken", eventId:3,userId:1})
 

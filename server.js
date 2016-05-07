@@ -4,21 +4,26 @@ var app = express()
 var port = process.env.PORT || 8080
 var db = require('./db/db')
 
+var session = require('express-session')
+
+app.use(session({
+  secret: 'ssshhhhhh! Top secret!',
+  saveUninitialized: true,
+  resave: true
+}))
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 app.set('views', __dirname + '/public/views')
-
-// app.use(express.static(__dirname + '/public'))
-
-var currentUserID = {}
+app.use(express.static(__dirname + '/public'))
 
 // STRANGER go to DISHOUT homepage
 app.get('/', function(req, res){
-  console.log('/')
-  console.log('STRANGER to DISHOUT landing page (with login/signup)')
+  console.log("### GET '/'")
+  console.log('Landing Page')
 
-  res.render('stranger_show')
+  res.render('index')
 })
 
 // redirect STRANGER go to DISHOUT homepage
@@ -30,9 +35,8 @@ app.get('/home', function(req, res){
 
 
 app.post('/login', function(req, res){
-  console.log('/login')
+  console.log('### POST /login')
   console.log("try and login via db")
-
   console.log("req/body: ", req.body)
 
   db.login(
@@ -40,15 +44,21 @@ app.post('/login', function(req, res){
     req.body.password,
     (err, data) => {
       if (err) {
-        console.log("failed to login, redirected to '/'", err)
+        console.log("Failed to login, redirected to '/'", err)
         res.redirect('/')
         return
       }
-      currentUserID = data.id
+      console.log("sess req: ", req.body)
+      console.log("sess data: ", data)
+      req.session.userId = data.id
       console.log("successful login, redirected to '/user/:id'")
-      console.log("currentUserID: ", currentUserID)
       res.redirect('/user/' + data.id)
     })
+})
+
+app.get("/logout",function(req,res){
+  req.session.destroy()
+  res.redirect("/")
 })
 
 app.post('/signup', function(req, res){
@@ -61,11 +71,12 @@ app.post('/signup', function(req, res){
     req.body.password,
     (err, id) => {
       if (err) {
-        console.log("failed to signup, redirected to '/'", err)
+        console.log("Failed to signup/create user, redirected to '/'", err)
         res.redirect('/')
         return
       }
-      currentUserID = id
+      console.log("create user return: ", id)
+      req.session.userId = id
       console.log("successful signup, redirected to '/user/:id'")
       res.redirect('/user/' + id)
     })
@@ -73,14 +84,22 @@ app.post('/signup', function(req, res){
 
 // USER go to users homepage
 app.get('/user/:id', function(req, res){
-  console.log('/user/:id')
+  console.log('### GET /user/:id')
   console.log('USER go to users homepage: ', req.body, req.params)
-  console.log('currentUserID: ', currentUserID)
+  console.log("Session id: ", req.session.userId)
 
-  db.getHostedEvents(req.params.id,
+  db.getHostedEvents(req.session.userId,
     (err, host) => {
-      db.getTenativeEvents(req.params.id,
+      if (err) {
+        console.log("Error getting hostedEvents ", err)
+        return
+      }
+      db.getTenativeEvents(req.session.userId,
         (err, guest) => {
+          if (err) {
+            console.log("Error getting tenativeEvents ", err)
+          }
+          console.log("passing to user_show: ", host, guest)
           res.render('user_show',
             {
               eventsHosting: host,
@@ -92,7 +111,7 @@ app.get('/user/:id', function(req, res){
 
 // HOST go to create new event page
 app.get('/event/new', function(req, res){
-  console.log('/event/new ')
+  console.log('### GET /event/new ')
   console.log('HOST go to create new event page')
 
   res.render('event_new')
@@ -100,6 +119,7 @@ app.get('/event/new', function(req, res){
 
 // HOST post the event host wants to create
 app.post('/event', function(req, res) {
+  console.log('### POST /event ')
   console.log("HOST post the event host wants to create: ")
 
   db.createEvent({
@@ -109,9 +129,15 @@ app.post('/event', function(req, res) {
       description: req.body.description,
       location: req.body.location
     },
-    (err, id) => {
-      console.log('Event successfully created, redirecting to /event/' + id)
-      res.redirect('/event/' + id)
+    (err, eventId) => {
+      if (err) {
+        console.log('Error trying to create event', err)
+        return
+      }
+      console.log('Event successfully created, redirecting to /event/' + eventId)
+      db.hostEvent(eventId, req.session.userId, function(err,data){
+        res.redirect('/event/' + eventId + '/addinfo')
+      })
     })
 })
 
@@ -120,7 +146,20 @@ app.get('/event/:id/addinfo', function(req, res){
   console.log('/event/:id/addinfo ', 'req.params: ', req.params)
   console.log('HOST add Dishes & invite Guests to event')
 
-  res.render('event_addinfo')
+  db.getDishesByEventID(req.params.id,
+    (err, dishes) => {
+      if (err) {
+        console.log('Failed to retrieve dishes by eventID ', err)
+        return
+      }
+
+      console.log("addinfo - dishes: ", dishes)
+      res.render('event_addinfo', {
+        'eventId': req.params.id,
+        'userId': req.session.userId,
+        'dishes': dishes
+      })
+    })
 })
 
 // GUEST view event page
@@ -128,20 +167,43 @@ app.get('/event/:id', function(req, res){
   console.log('/event/:id ', 'req.params: ', req.params)
   console.log('GUEST view event page')
 
-  res.render('event_show',
-    { event: {
-        id: 3030,
-        name: "bennie",
-        time: "6pm",
-        date: "1st Feb",
-        description: "90's Themed",
-        location: "123 Fake St"
-      },
-      dishes: [
-        4,
-        5,
-        8
-      ]
+  db.getEventByID(req.params.id,
+    (err, data) => {
+      if (err) {
+        console.log('failed to get event with id: ' + req.params.id + ".", err)
+        return
+      }
+      console.log('Successfully got event, now rendering event/' + req.params.id)
+      console.log('db returned the event: ', data)
+
+      db.getDishesByEventID(req.params.id,
+        (err, dishes) => {
+          if (err) {
+            console.log('Failed to get dishes for event id: ', req.params.id, err)
+            return
+          }
+          console.log('db returned the dishes: ', dishes)
+          res.render('event_show', {
+            event: data,
+            dishes: dishes
+          })
+      })
+    })
+})
+
+// HOST add dishes they expect guests to bring
+app.post('/dish/:eventId/:userId', function(req, res){
+  console.log('POST /dish ', 'req.body: ', req.body, 'req.params: ', req.params)
+  console.log('HOST add Dishes for Guests to bring to event')
+
+  db.insertDishHost(req.params.eventId, req.body.course,
+    (err, dishId) => {
+      if (err) {
+        console.log('inserting dish as host failed', err)
+        return
+      }
+      console.log('Successfully inserted dish as host (dishId)', dishId)
+      res.redirect('/event/' + req.params.eventId + '/addinfo')
     })
 })
 
