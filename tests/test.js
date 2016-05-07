@@ -3,6 +3,7 @@ var knexConfig = require('../knexfile')
 var knex = require('knex')(knexConfig["development"])
 var user = require("../db/user")
 var guest = require("../db/guest")
+var events = require("../db/events")
 
 var createUserTestObj = {
   name:"Jill",
@@ -14,6 +15,14 @@ var createUserUni = {
   name:"Ben",
   email:"ben@scully.com",
   password:"44"
+}
+
+var createEventObj = {
+  name: "Jack Jones",
+  date: "12/12",
+  time: "23:00",
+  description: "come here and find out!",
+  location: "Wellington, NZ"
 }
 
 var test = redtape({
@@ -70,6 +79,15 @@ test("tests guest functions",function(t){
     }
     t.ok(data,"Some data was returned")
     t.equal(typeof data, 'object', "returns an object with guest details")
+    t.end()
+  })
+})
+
+test("tests events functions",function(t){
+  events.createEvent(createEventObj,function(err,data){
+    if(err){console.log(err)}
+    t.ok(data,"Something came back!")
+    t.equal(typeof data[0], 'number', "it returns an id number")
     t.end()
   })
 })
