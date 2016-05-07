@@ -16,13 +16,12 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 app.set('views', __dirname + '/public/views')
-
 app.use(express.static(__dirname + '/public'))
 
 // STRANGER go to DISHOUT homepage
 app.get('/', function(req, res){
-  console.log('/')
-  console.log('STRANGER to DISHOUT landing page (with login/signup)')
+  console.log("### GET '/'")
+  console.log('Landing Page')
 
   res.render('index')
 })
@@ -36,7 +35,7 @@ app.get('/home', function(req, res){
 
 
 app.post('/login', function(req, res){
-  console.log('POST /login')
+  console.log('### POST /login')
   console.log("try and login via db")
   console.log("req/body: ", req.body)
 
@@ -45,16 +44,15 @@ app.post('/login', function(req, res){
     req.body.password,
     (err, data) => {
       if (err) {
-        console.log("failed to login, redirected to '/'", err)
+        console.log("Failed to login, redirected to '/'", err)
         res.redirect('/')
         return
       }
-        console.log("here is the data for the session",data)
-        console.log("req: ", req.body)
-        req.session.userId = data.id
-        console.log("successful login, redirected to '/user/:id'")
-        console.log("currentUserID: ", currentUserID)
-        res.redirect('/user/' + data.id)
+      console.log("sess req: ", req.body)
+      console.log("sess data: ", data)
+      req.session.userId = data.id
+      console.log("successful login, redirected to '/user/:id'")
+      res.redirect('/user/' + data.id)
     })
 })
 
@@ -73,12 +71,12 @@ app.post('/signup', function(req, res){
     req.body.password,
     (err, id) => {
       if (err) {
-        console.log("failed to signup, redirected to '/'", err)
+        console.log("Failed to signup/create user, redirected to '/'", err)
         res.redirect('/')
         return
       }
-      console.log(id[0])
-      req.session.id = id[0]
+      console.log("create user return: ", id)
+      req.session.userId = id
       console.log("successful signup, redirected to '/user/:id'")
       res.redirect('/user/' + id)
     })
@@ -86,15 +84,22 @@ app.post('/signup', function(req, res){
 
 // USER go to users homepage
 app.get('/user/:id', function(req, res){
-  console.log('/user/:id')
+  console.log('### GET /user/:id')
   console.log('USER go to users homepage: ', req.body, req.params)
-  console.log('currentUserID: ', currentUserID)
   console.log("Session id: ", req.session.userId)
 
-  db.getHostedEvents(req.params.id,
+  db.getHostedEvents(req.session.userId,
     (err, host) => {
-      db.getTenativeEvents(req.params.id,
+      if (err) {
+        console.log("Error getting hostedEvents ", err)
+        return
+      }
+      db.getTenativeEvents(req.session.userId,
         (err, guest) => {
+          if (err) {
+            console.log("Error getting tenativeEvents ", err)
+          }
+          console.log("passing to user_show: ", host, guest)
           res.render('user_show',
             {
               eventsHosting: host,
@@ -106,7 +111,7 @@ app.get('/user/:id', function(req, res){
 
 // HOST go to create new event page
 app.get('/event/new', function(req, res){
-  console.log('/event/new ')
+  console.log('### GET /event/new ')
   console.log('HOST go to create new event page')
 
   res.render('event_new')
@@ -114,6 +119,7 @@ app.get('/event/new', function(req, res){
 
 // HOST post the event host wants to create
 app.post('/event', function(req, res) {
+  console.log('### POST /event ')
   console.log("HOST post the event host wants to create: ")
 
   db.createEvent({
@@ -146,11 +152,11 @@ app.get('/event/:id/addinfo', function(req, res){
         console.log('Failed to retrieve dishes by eventID ', err)
         return
       }
-      // TODO req.session.userId add inreaplacement of USERID
+
       console.log("addinfo - dishes: ", dishes)
       res.render('event_addinfo', {
         'eventId': req.params.id,
-        'userId': 2,
+        'userId': req.session.userId,
         'dishes': dishes
       })
     })
