@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var guest = require('../db/guest')
+var guest = require('../db/guests')
 
 // Add dish to event
 router.post('/', function(req, res){

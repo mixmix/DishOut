@@ -2,7 +2,7 @@ var express = require('express')
 var router = express.Router()
 var events = require('../db/events')
 var hosts = require("../db/hosts")
-var dish = require("../db/dish")
+var dishes = require("../db/dishes")
 
 // Screen for creating an event
 router.get('/new', function(req, res){
@@ -49,29 +49,31 @@ router.post('/', function(req, res) {
 router.get('/:id/addinfo', function(req, res){
   console.log('### GET /event/:id/addinfo')
 
-  dish.getDishesByEventID(req.params.id,
-    (err, dishes) => {
+  events.getEventById(req.params.id,
+    (err, event) => {
       if (err) {
-        console.log('Failed to retrieve dishes by eventID ', err)
-        res.send('Failed to retrieve dishes by eventID')
+        console.log('Failed to retrieve event by eventID ', err)
+        res.send('Failed to retrieve event by eventID')
         return
       }
-      console.log("Successful getDishesByEventID", dishes)
-      res.render('event_addinfo', {
-        'eventId': req.params.id,
-        'userId': req.session.userId,
-        'dishes': dishes,
-        'guests': [{
-            name: 'test person this isnt implemented'
-          }],
-        'event': {
-          name: 'dummy data this isnt implemented',
-          time: 'dummy data this isnt implemented',
-          date: 'dummy data this isnt implemented',
-          description: 'dummy data this isnt implemented',
-          location: 'dummy data this isnt implemented'
-        }
-      })
+      console.log("Successful getEventById", event)
+      dishes.getDishesByEventId(req.params.id,
+        (err, dishes) => {
+          if (err) {
+            console.log('Failed to retrieve dishes by eventID ', err)
+            res.send('Failed to retrieve dishes by eventID')
+            return
+          }
+          console.log("Successful getDishesByEventID", dishes)
+          res.render('event_addinfo', {
+            'userId': req.session.userId,
+            'event': event,
+            'dishes': dishes,
+            'guests': [{
+                name: 'Mr. FakeName (this isnt implemented)'
+              }]
+          })
+        })
     })
 })
 
@@ -79,15 +81,15 @@ router.get('/:id/addinfo', function(req, res){
 router.get('/:id', function(req, res){
   console.log('### GET /event/:id')
 
-  events.getEventByID(req.params.id,
+  events.getEventById(req.params.id,
     (err, event) => {
       if (err) {
-        console.log('Failed to get event by id')
+        console.log('Failed to get event by id', err)
         res.send('Failed to get event by id')
         return
       }
       console.log('Successfully got event', event)
-      dish.getDishesByEventID(req.params.id,
+      dishes.getDishesByEventId(req.params.id,
         (err, dishes) => {
           if (err) {
             console.log('Failed to get dishes by event')
