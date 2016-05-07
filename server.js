@@ -132,7 +132,7 @@ app.post('/event', function(req, res) {
         return
       }
       console.log('Event successfully created, redirecting to /event/' + id)
-      res.redirect('/event/' + id)
+      res.redirect('/event/' + id + '/addinfo')
     })
 })
 
@@ -141,7 +141,20 @@ app.get('/event/:id/addinfo', function(req, res){
   console.log('/event/:id/addinfo ', 'req.params: ', req.params)
   console.log('HOST add Dishes & invite Guests to event')
 
-  res.render('event_addinfo')
+  db.getDishesByEventID(req.params.id,
+    (err, dishes) => {
+      if (err) {
+        console.log('Failed to retrieve dishes by eventID ', err)
+        return
+      }
+      // TODO req.session.userId add inreaplacement of USERID
+      console.log("addinfo - dishes: ", dishes)
+      res.render('event_addinfo', {
+        'eventId': req.params.id,
+        'userId': 2,
+        'dishes': dishes
+      })
+    })
 })
 
 // GUEST view event page
@@ -170,6 +183,22 @@ app.get('/event/:id', function(req, res){
             dishes: dishes
           })
       })
+    })
+})
+
+// HOST add dishes they expect guests to bring
+app.post('/dish/:eventId/:userId', function(req, res){
+  console.log('POST /dish ', 'req.body: ', req.body, 'req.params: ', req.params)
+  console.log('HOST add Dishes for Guests to bring to event')
+
+  db.insertDishHost(req.params.eventId, req.body.course,
+    (err, dishId) => {
+      if (err) {
+        console.log('inserting dish as host failed', err)
+        return
+      }
+      console.log('Successfully inserted dish as host (dishId)', dishId)
+      res.redirect('/event/' + req.params.eventId + '/addinfo')
     })
 })
 

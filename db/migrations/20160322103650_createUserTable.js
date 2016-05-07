@@ -28,9 +28,9 @@ exports.up = function(knex, Promise) {
   knex.schema.createTableIfNotExists("dishes",function(table){
     table.increments('id')
     table.string('course')
-    table.string('name')
+    table.string('name').nullable()
     table.integer('eventId')
-    table.integer('userId')
+    table.integer('userId').nullable()
   })
 ])
 };
