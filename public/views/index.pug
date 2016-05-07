@@ -1,40 +1,26 @@
-html
-  head
-    title Stranger Homepage
-    //normalize css
-    link(rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
-    //our css file
-    link(rel='stylesheet', type='text/css', href='/css/index.css')
-    // Latest compiled and minified Bootstrap CSS
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css', integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7', crossorigin='anonymous')
-    // Optional theme
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css', integrity='sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r', crossorigin='anonymous')
-    link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
-  body
-    #wrapper
-      div
-        h1 Welcome to DishOut
-      .login
-        h3 Login to DishOut
-        form.login1(method='post', action='/login')
-          p
-            input(type='text', name='email', value='', placeholder='Email')
-          p
-            input(type='password', name='password', value='', placeholder='Password')
-          .submitButton
-            p.submit
-              input(type='submit', name='commit', value='Login')
-      .signup
-        h3 New to DishOut?  Register here
-        form(method='post', action='/signup/')
-          p
-            input(type='text', name='name', value='', placeholder='Name')
-          p
-            input(type='text', name='email', value='', placeholder='Email')
-          p
-            input(type='password', name='password', value='', placeholder='Password')
-          .submitButton
-            p.submit
-              input(type='submit', name='commit', value='Sign Up')
-    
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
+extends layout
+
+block content
+  h1 Welcome to DishOut
+  br
+  .login
+  h3 Login to DishOut
+  form(method='post', action='/login')
+    p
+      input(type='text', name='email', value='', placeholder='Email')
+    p
+      input(type='password', name='password', value='', placeholder='Password')
+    p.submit
+      input(type='submit', name='commit', value='Login')
+  br
+  h3 New to DishOut?  Register here
+  form(method='post', action='/signup/')
+    p
+      input(type='text', name='name', value='', placeholder='Name')
+    p
+      input(type='text', name='email', value='', placeholder='Email')
+    p
+      input(type='password', name='password', value='', placeholder='Password')
+    p.submit
+      input(type='submit', name='commit', value='Sign Up')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')

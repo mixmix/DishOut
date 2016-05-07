@@ -1,3 +1,4 @@
+
 body {
   background: rgb(252, 237, 217)
 }
@@ -25,7 +26,6 @@ body {
 .submitButton {
   display: flex;
   justify-content: center;
-}
 
 .entry{
   background: rgb(66, 66, 186);

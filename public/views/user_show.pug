@@ -1,22 +1,37 @@
-html
-  head
-    link(type='text/css', rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
-    link(type='text/css', rel='stylesheet', href='../css/index.css')
-    link(type='img/ico', rel='icon', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
-    title User Homepage
+extends layout
+
+block content
   body
+    
+    h1 User Homepage
+  
+    name Name: #{user.name}
+    br
+    time Email: #{user.email}
+  
+    hr
+  
     form(method="get" action="/event/new")
       input(type='submit', value='Create Event')
-    br
-    h3 Events you are Hosting:
-    eventsImHosting
-      ul
-        each val in eventsHosting
-          li= val.name
-    br
-    br
-    h3 Events you are Invited to:
-    eventsInvitedTo
-      ul
-        each val in eventsInvitedTo
-          li= val.name
+    
+    hr
+    
+    .eventsHosting
+      h3 Events you are Hosting:
+      if hostedEvents.length
+        each event in hostedEvents
+          .event
+            a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
+      else
+        p You're not hosting any events
+        
+    hr
+
+    .eventsGuesting
+      h3 Events you are Invited to:
+      if guestedEvents.length
+        each event in guestedEvents
+          .event
+            a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
+      else
+        p You're not invited to any events
