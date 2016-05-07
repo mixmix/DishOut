@@ -30,7 +30,7 @@ app.get('/home', function(req, res){
 
 
 app.post('/login', function(req, res){
-  console.log('/login')
+  console.log('POST /login')
   console.log("try and login via db")
 
   console.log("req/body: ", req.body)
@@ -110,6 +110,10 @@ app.post('/event', function(req, res) {
       location: req.body.location
     },
     (err, id) => {
+      if (err) {
+        console.log('Error trying to create event', err)
+        return
+      }
       console.log('Event successfully created, redirecting to /event/' + id)
       res.redirect('/event/' + id)
     })
@@ -128,20 +132,27 @@ app.get('/event/:id', function(req, res){
   console.log('/event/:id ', 'req.params: ', req.params)
   console.log('GUEST view event page')
 
-  res.render('event_show',
-    { event: {
-        id: 3030,
-        name: "bennie",
-        time: "6pm",
-        date: "1st Feb",
-        description: "90's Themed",
-        location: "123 Fake St"
-      },
-      dishes: [
-        4,
-        5,
-        8
-      ]
+  db.getEventByID(req.params.id,
+    (err, data) => {
+      if (err) {
+        console.log('failed to get event with id: ' + req.params.id + ".", err)
+        return
+      }
+      console.log('Successfully got event, now rendering event/' + req.params.id)
+      console.log('db returned the event: ', data)
+
+      db.getDishesByEventID(req.params.id,
+        (err, dishes) => {
+          if (err) {
+            console.log('Failed to get dishes for event id: ', req.params.id, err)
+            return
+          }
+          console.log('db returned the dishes: ', dishes)
+          res.render('event_show', {
+            event: data,
+            dishes: dishes
+          })
+      })
     })
 })
 
