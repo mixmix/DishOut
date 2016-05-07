@@ -121,8 +121,14 @@ function getHostedEvents(id, cb){
       Promise.all(data.map(function(d) {
         return knex.select().where("id", d.eventId).table("events")
       }))
-        .then(function (data) {
-          cb(null, data.map(d => d[0]))
+        .then(function (events) {
+          if (events[0].length) {
+            console.log("inside if?: ", events)
+            cb(null, events.map(event => event[0]))
+            return
+          }
+          console.log("outside if?: ", events)
+          cb(null, [])
         })
     })
     .catch(function(err){
@@ -163,7 +169,8 @@ module.exports = {
   createEvent: createEvent,
   getEventByID: getEventByID,
   getDishesByEventID: getDishesByEventID,
-  insertDishHost: insertDishHost
+  insertDishHost: insertDishHost,
+  hostEvent: hostEvent
 }
 
 // login("ben@scully.com","", function(err,data){

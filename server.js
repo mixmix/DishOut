@@ -90,8 +90,16 @@ app.get('/user/:id', function(req, res){
 
   db.getHostedEvents(req.session.userId,
     (err, host) => {
+      if (err) {
+        console.log("Error getting hostedEvents ", err)
+        return
+      }
       db.getTenativeEvents(req.session.userId,
         (err, guest) => {
+          if (err) {
+            console.log("Error getting tenativeEvents ", err)
+          }
+          console.log("passing to user_show: ", host, guest)
           res.render('user_show',
             {
               eventsHosting: host,
