@@ -4,6 +4,8 @@ var knex = require('knex')(knexConfig["development"])
 var user = require("../db/user")
 var guest = require("../db/guest")
 var events = require("../db/events")
+var hosts = require("../db/hosts")
+var dish = require("../db/dish")
 
 var createUserTestObj = {
   name:"Jill",
@@ -88,6 +90,26 @@ test("tests events functions",function(t){
     if(err){console.log(err)}
     t.ok(data,"Something came back!")
     t.equal(typeof data[0], 'number', "it returns an id number")
+    t.end()
+  })
+})
+
+test("tests hosts functions",function(t){
+  hosts.hostEvent("1","2",function(err,data){
+    if(err){console.log(err)}
+    t.ok(data,"Something came back!")
+    t.equal(typeof data[0], 'number', "it returns an id number")
+    t.end()
+  })
+})
+
+test("tests dish functions",function(t){
+  dish.getDishById("1",function(err,data){
+    if(err){
+      console.log(err)
+    }
+    t.ok(data,"Some data was returned")
+    t.equal(typeof data, 'object', "returns an object with dish details")
     t.end()
   })
 })
