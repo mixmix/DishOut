@@ -4,6 +4,14 @@ var app = express()
 var port = process.env.PORT || 8080
 var db = require('./db/db')
 
+var session = require('express-session')
+
+app.use(session({
+  secret: 'ssshhhhhh! Top secret!',
+  saveUninitialized: true,
+  resave: true
+}))
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
@@ -44,11 +52,18 @@ app.post('/login', function(req, res){
         res.redirect('/')
         return
       }
-      currentUserID = data.id
-      console.log("successful login, redirected to '/user/:id'")
-      console.log("currentUserID: ", currentUserID)
-      res.redirect('/user/' + data.id)
+        console.log("here is the data for the session",data)
+        console.log("req: ", req.body)
+        req.session.userId = data.id
+        console.log("successful login, redirected to '/user/:id'")
+        console.log("currentUserID: ", currentUserID)
+        res.redirect('/user/' + data.id)
     })
+})
+
+app.get("/logout",function(req,res){
+  req.session.destroy()
+  res.redirect("/")
 })
 
 app.post('/signup', function(req, res){
@@ -65,7 +80,8 @@ app.post('/signup', function(req, res){
         res.redirect('/')
         return
       }
-      currentUserID = id
+      console.log(id[0])
+      req.session.id = id[0]
       console.log("successful signup, redirected to '/user/:id'")
       res.redirect('/user/' + id)
     })
@@ -76,6 +92,7 @@ app.get('/user/:id', function(req, res){
   console.log('/user/:id')
   console.log('USER go to users homepage: ', req.body, req.params)
   console.log('currentUserID: ', currentUserID)
+  console.log("Session id: ", req.session.userId)
 
   db.getHostedEvents(req.params.id,
     (err, host) => {
