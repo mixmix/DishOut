@@ -1,8 +1,8 @@
 var redtape = require('redtape')
-var db = require("../db/db")
 var knexConfig = require('../knexfile')
 var knex = require('knex')(knexConfig["development"])
 var user = require("../db/user")
+var guest = require("../db/guest")
 
 var createUserTestObj = {
   name:"Jill",
@@ -59,6 +59,17 @@ test("tests create user db function",function(t){
       console.log(err)
     }
     t.true(err)
+    t.end()
+  })
+})
+
+test("tests guest functions",function(t){
+  guest.getEventsAttending("1",function(err,data){
+    if(err){
+      console.log(err)
+    }
+    t.ok(data,"Some data was returned")
+    t.equal(typeof data, 'object', "returns an object with guest details")
     t.end()
   })
 })
