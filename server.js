@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'pug')
 app.set('views', __dirname + '/public/views')
 
-// app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'))
 
 var currentUserID = {}
 
@@ -26,7 +26,7 @@ app.get('/', function(req, res){
   console.log('/')
   console.log('STRANGER to DISHOUT landing page (with login/signup)')
 
-  res.render('stranger_show')
+  res.render('index')
 })
 
 // redirect STRANGER go to DISHOUT homepage
