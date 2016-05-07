@@ -1,14 +1,35 @@
-html{
-  background: rgb(66, 66, 186);
-  color: white;
-  max-width: 100%;
-  max-height: 100%;
-  font-family:'Roboto', sans-serif;
+body {
+  background: rgb(252, 237, 217)
+}
+
+#wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.signup {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.submitButton {
+  display: flex;
+  justify-content: center;
 }
 
 .entry{
-    background: rgb(66, 66, 186);
-    padding: 20px;
+  background: rgb(66, 66, 186);
+  padding: 20px;
 }
 
 .header, .entry{
@@ -20,6 +41,15 @@ h1{
   font-family:'Roboto', sans-serif;
   font-weight: 900;
   text-align: center;
-  color: #FFD700;
+  color: #22201f;
   font-size: 60px;
+}
+h2{
+  text-align: center;
+}
+h3{
+  text-align: center;
+}
+h4{
+  text-align: center;
 }

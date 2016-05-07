@@ -5,18 +5,18 @@ html
     link(rel='stylesheet', type='text/css', href='css/index.css')
     link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
   body
-    h1 HOST add info to the new event host is creating (event/:id/addinfo)  
-    
-    hr 
-    
+    h1 HOST add info to the new event host is creating (event/:id/addinfo)
+
+    hr
+
     h2 List of Dishes You Want Guests To bring
     dishesToBring
       ul
         each dish in dishes
           li= dish.course
-    
+
     hr
-    
+
     h3 Add a Dish You Want Guests To Bring:
     - var dishAction = '/dish/' + eventId + "/" + userId
     form(method="post" action=dishAction)
@@ -27,12 +27,12 @@ html
         option(value='dessert') Dessert
       input(type='submit', value='Add Dish')
     //Appetizer, Soup, Fish or Pasta, Entree, Main Course, Salad, Dessert, Gift,
-    hr 
-     
-    h2 Who Do You Want To Invite?
-    
     hr
-    
+
+    h2 Who Do You Want To Invite?
+
+    hr
+
     form(method="get" action='/user/' + userId)
       input(type='submit', value='Done')
 
