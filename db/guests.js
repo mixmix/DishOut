@@ -10,13 +10,14 @@ function getEventsAttending (userId, cb) {
 function inviteGuestsByEmail(email,eventId,cb){
   knex("users").select().where("email",email)
   .then(function(data){
+    console.log('if found,what i get ',data)
     knex("guests").insert({
+      id: Date.now(),
       eventId:eventId,
-      userId:data.id
+      userId:data[0].id
+    }).then(function(data){
+      cb(data)
     })
-  })
-  .then(function(data){
-    console.log("Successfully inserted this into guests:", data)
   })
   .catch(function(err){
     console.log("db error: ", err)

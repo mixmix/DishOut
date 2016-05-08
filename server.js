@@ -29,6 +29,7 @@ app.use('/', basic_routes)
 app.use('/user', user_routes)
 app.use('/event', event_routes)
 app.use('/dish', dish_routes)
+app.use('/guest', guest_routes)
 
 
 app.listen(port, function() {
