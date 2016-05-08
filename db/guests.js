@@ -9,6 +9,14 @@ module.exports = {
       .catch( (err) => cb(err) )
   },
 
+  getGuestsOfEventId: (eventId, cb) => {
+    knex('guests').select()
+      .join('users', 'users.id', '=', 'guests.userId')
+      .where('guests.eventId', eventId)
+      .then( (data) => cb(null, data) )
+      .catch( (err) => cb(err) )
+  },
+
   inviteGuestByEmail: (inviteObj, cb) => {
     knex("users").select().where("email", inviteObj.email)
       .then( (data) => {
