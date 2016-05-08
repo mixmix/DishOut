@@ -13,20 +13,34 @@ function getDishesByEventId (eventId, cb) {
     .catch( (err) => cb(err) )
 }
 
-function dishAddedByHost (eventId, course, cb) {
-  knex('dishes').insert({
-      'eventId': eventId,
-      'course': course
-    })
+function dishAddedByHost (dishObj, cb) {
+  var num = parseInt(dishObj.numberOf) || 1
+  var arr = []
+  for (var i = 0; i < num; i++) {
+    arr.push({
+              'eventId': dishObj.eventId,
+              'course': dishObj.course
+            })
+  }
+  knex('dishes').insert(arr)
     .then( (data) => cb(null, data))
     .catch( (err) => cb(err) )
 }
 
 function addGuestToDish (dishObj, cb) {
-  console.log("ffdd: ", dishObj)
   knex('dishes').where('id', dishObj.dishId)
     .update({
       'userId': dishObj.userId
+    })
+    .then( (data) => cb(null, data))
+    .catch( (err) => cb(err) )
+}
+
+function addNameToDish (dishObj, cb) {
+  console.log("db method- dishObj: ", dishObj)
+  knex('dishes').where('id', dishObj.dishId)
+    .update({
+      'name': dishObj.name
     })
     .then( (data) => cb(null, data))
     .catch( (err) => cb(err) )
@@ -65,5 +79,6 @@ module.exports = {
   getDishesByEventId: getDishesByEventId,
   dishAddedByHost: dishAddedByHost,
   addGuestToDish: addGuestToDish,
-  addUserNameToEachDish: addUserNameToEachDish
+  addUserNameToEachDish: addUserNameToEachDish,
+  addNameToDish: addNameToDish
 }

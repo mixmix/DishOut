@@ -27,8 +27,15 @@ block content
             .course #{dish.course}
             if dish.userName
               .dishUser #{dish.userName}
-            .dishName #{dish.name}
-            form(method='post' action='/dish/claim/' + dish.id + '/' + userId + '/' + event.id)
-              input(type='submit', value='Claim Dish')
-            
+            else
+              .dishUser
+                form(method='post' action='/dish/claim/' + dish.id + '/' + userId + '/' + event.id)
+                  input(type='submit', value="I'll Bring This!")
+            if dish.name
+              .dishName #{dish.name}
+            else
+              form(method='post' action='/dish/name/' + dish.id + '/' + userId + '/' + event.id)
+                input(type='text' name='newDishName')
+                input(type='submit', value="Add Dish Name")
+                      
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
