@@ -25,10 +25,10 @@ block content
         each dish in dishes
           .dish
             .course #{dish.course}
-            if dish.userName
-              .dishUser #{dish.userName}
-            .dishName #{dish.name}
-            form(method='post' action='/dish/claim/' + dish.id + '/' + userId + '/' + event.id)
-              input(type='submit', value='Claim Dish')
+              if dish.userName
+                .dishUser #{dish.userName}
+                .dishName #{dish.name}
+              form(method='post' action='/dish/claim/' + dish.id + '/' + userId + '/' + event.id)
+                input(type='submit', value='Claim Dish')
             
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')

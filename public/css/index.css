@@ -1,13 +1,22 @@
 
-body {
-  background: rgb(252, 237, 217)
-}
-
-#wrapper {
+#homeWrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  background-image: url("../images/food.jpg");
+}
+
+h1 {
+
+}
+
+
+.jumbotron {
+  margin-top: 8%;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 30px;
 }
 
 .login {

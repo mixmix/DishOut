@@ -1,7 +1,8 @@
 //CSS Styling Reference
 
-.mainTitle = "Main page Titles"
+.title = "Main page Titles"
 .subTitle = "Secondary Titles on each page"
+.subSubTitle = "Third level title on each page"
 .eventInfo = "Event details div containing event details"
   .name = "name of event div "
   .time = "time of event div"
@@ -13,18 +14,22 @@
  .events = ""
 .eventsGuesting = "The events div containing all the events you are a guest of"
 
+.noEvents = "Div for response if you are not hosting or invited to any events"
+
+
 .userDetails = ""
 
 
 .login = "Any type of login box"
+.inviteGuests = "Invite guests input forms"
 
+.nameForm = "Enter name form div"
+.emailForm = "Enter email address form div"
+.passwordForm = "Enter password form div"
 
-.guestsDishes
-  .title
-    h2 Dishes Guests need to bring
-  .dishes
-    each dish in dishes
-      .dish
-        .course #{dish.course}
-        .dishUser #{dish.userId}
-        .dishName #{dish.name}
+.guestsDishes = "Div containing dishes guests need to bring"
+  .dishes = "Div containing dishes users bringing/need to bring"
+    .dish = "particular dish div"
+      .course #{dish.course}
+      .dishUser #{dish.userId}
+      .dishName #{dish.name}

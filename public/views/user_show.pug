@@ -21,14 +21,16 @@ block content
           .event
             a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
-        p You're not hosting any events
+        .noEvents
+          p You're not hosting any events
 
     .eventsGuesting
       .subtitle
-      h3 Events you are Invited to:
+        h3 Events you are Invited to:
       if guestedEvents.length
         each event in guestedEvents
           .event
             a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
-        p You're not invited to any events
+        .noEvents
+          p You're not invited to any events
