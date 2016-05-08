@@ -15,17 +15,16 @@ block content
 
     .eventsHosting
       .subtitle
-      h3 Events you are Hosting:
+        h3 Events you are Hosting:
       if hostedEvents.length
         each event in hostedEvents
           .event
             a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
         p You're not hosting any events
-        
-    hr
 
     .eventsGuesting
+      .subtitle
       h3 Events you are Invited to:
       if guestedEvents.length
         each event in guestedEvents

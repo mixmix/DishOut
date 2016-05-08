@@ -11,6 +11,7 @@
 
 .eventsHosting = "The events div containing all the events you are hosting"  
  .events = ""
+.eventsGuesting = "The events div containing all the events you are a guest of"
 
 .userDetails = ""
 
