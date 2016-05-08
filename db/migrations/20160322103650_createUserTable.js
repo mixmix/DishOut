@@ -14,6 +14,7 @@ exports.up = function(knex, Promise) {
   }),
  knex.schema.createTableIfNotExists('guests', function(table) {
     // table.increments('eventId')
+    table.increments('id')
     table.integer('eventId')
     table.integer('userId')
   }),
