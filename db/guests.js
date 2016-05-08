@@ -27,5 +27,18 @@ module.exports = {
       })
       .then( (data) => cb(null, data) )
       .catch( (err) => cb(err) )
+  },
+
+  inviteGuestByName: (eventObj, cb) => {
+    console.log("eventObj ", eventObj)
+    knex("users").select().where("name",eventObj.name)
+      .then((data) => {
+        return knex("guests").insert({
+          eventId:eventObj.eventId,
+          userId:data[0].id
+        })
+      })
+      .then((data) => cb(null,data))
+      .catch((err) => cb(err))
   }
 }

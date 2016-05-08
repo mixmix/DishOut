@@ -1,26 +1,35 @@
 extends layout
 
 block content
-  h1 Welcome to DishOut
-  br
-  .login
-  h3 Login to DishOut
-  form(method='post', action='/login')
-    p
-      input(type='text', name='email', value='', placeholder='Email')
-    p
-      input(type='password', name='password', value='', placeholder='Password')
-    p.submit
-      input(type='submit', name='commit', value='Login')
-  br
-  h3 New to DishOut?  Register here
-  form(method='post', action='/signup/')
-    p
-      input(type='text', name='name', value='', placeholder='Name')
-    p
-      input(type='text', name='email', value='', placeholder='Email')
-    p
-      input(type='password', name='password', value='', placeholder='Password')
-    p.submit
-      input(type='submit', name='commit', value='Sign Up')
-  script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
+  #homeWrapper
+    .jumbotron
+      h1 Welcome to DishOut
+      .panel.panel-default
+        .panel-heading 
+          h3 Sign in to DishOut
+          .panel-body
+            form(method='post', action='/login')
+              .form-group
+                label(for='email') Email address
+                input#exampleInputEmail1.form-control(type='email', name='email' value='', placeholder='Email')
+              .form-group
+                label(for='password') Password
+                input#exampleInputPassword1.form-control(type='password', name='password', value='', placeholder='Password')
+                p
+                button.btn.btn-default(type='submit' name='commit' value='Login') Login
+                  
+        .panel-heading 
+          h3 New to DishOut? Register Here
+          .panel-body
+            form(method='post', action='/signup/')
+              .form-group
+                label(for='exampleInputEmail1') Email address
+                input#exampleInputEmail1.form-control(type='email', name='email' value='', placeholder='Email')
+              .form-group
+                label(for='exampleInputEmail1') Email address
+                input#exampleInputEmail1.form-control(type='email', name='email' value='', placeholder='Email')
+              .form-group
+                label(for='exampleInputPassword1') Password
+                input#exampleInputPassword1.form-control(type='password', name='password', value='', placeholder='Password')
+                p
+                button.btn.btn-default(type='submit' name='commit' value='Login') Sign Up

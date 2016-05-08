@@ -2,22 +2,23 @@ extends layout
 
 block content
   body
-    h1 HOST add info to the new event host is creating (event/:id/addinfo)
+    .title
+      h1 HOST add info to the new event host is creating (event/:id/addinfo)
+    .eventInfo
+      .name
+        name Name: #{event.name}
+      .time
+        time Time: #{event.time}
+      .date
+        date Date: #{event.date}
+      .description
+        description Description: #{event.description}
+      .location
+        location Location: #{event.location}
 
-    name Name: #{event.name}
-    br
-    time Time: #{event.time}
-    br
-    date Date: #{event.date}
-    br
-    description Desctipion: #{event.description}
-    br
-    location Location: #{event.location}
-
-    hr
-
-    h2 List of Dishes You Want Guests To bring
-    .dishesToBring
+    .subTitle
+      h2 List of Dishes You Want Guests To bring
+    .dishes
       if dishes.length
         each dish in dishes
           .dish #{dish.course}
@@ -25,7 +26,7 @@ block content
         p You haven't decided on any dishes for your guests to bring
 
     h3 Add a Dish You Want Guests To Bring:
-    
+
     form(method="post" action='/dish/' + event.id + "/" + userId)
       select(name="course")
         option(value='Entree') Entree
@@ -54,6 +55,12 @@ block content
     form(method="post" action="/guest")
       input(type='hidden',name='eventId' ,value=event.id )
       input(type='text', name='email' placeholder='type guests email')
+      input(type='submit', value='Invite Guest')
+      hr
+
+    form(method="post" action="/guest/name")
+      input(type='hidden',name='eventId' ,value=event.id )
+      input(type='text', name='name' placeholder='type guests name')
       input(type='submit', value='Invite Guest')
 
     hr

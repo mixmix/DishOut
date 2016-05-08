@@ -2,36 +2,35 @@ extends layout
 
 block content
   body
-    
-    h1 User Homepage
-  
-    name Name: #{user.name}
-    br
-    time Email: #{user.email}
-  
-    hr
-  
-    form(method="get" action="/event/new")
-      input(type='submit', value='Create Event')
-    
-    hr
-    
-    eventsHosting
-      h3 Events you are Hosting:
+    .title
+      h1 User Homepage
+    .userDetails    
+      .name
+        name Name: #{user.name}
+      .email 
+        email Email: #{user.email}
+      .submitButton    
+        form(method="get" action="/event/new")
+        input(type='submit', value='Create Event')
+
+    .eventsHosting
+      .subtitle
+        h3 Events you are Hosting:
       if hostedEvents.length
         each event in hostedEvents
           .event
             a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
-        p You're not hosting any events
-        
-    hr
+        .noEvents
+          p You're not hosting any events
 
-    eventsGuesting
-      h3 Events you are Invited to:
+    .eventsGuesting
+      .subtitle
+        h3 Events you are Invited to:
       if guestedEvents.length
         each event in guestedEvents
           .event
             a(href='/event/' + event.id) #{event.name} #{event.date} #{event.time}
       else
-        p You're not invited to any events
+        .noEvents
+          p You're not invited to any events
