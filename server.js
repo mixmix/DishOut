@@ -30,15 +30,6 @@ app.use('/user', user_routes)
 app.use('/event', event_routes)
 app.use('/dish', dish_routes)
 
-// passport.use(new Strategy({
-//     clientID:process.env.FBID,
-//     clientSecret:process.env.FBSECRET,
-//     callbackURL: "http://localhost:3000/auth/facebook/callback"
-//   },
-//   function(accessToken, refreshToken,profile,cb){
-//     return cb(null,profile._json)
-//   }
-// ))
 
 app.listen(port, function() {
     console.log('Our app is running on http://localhost:' + port + '\n')
