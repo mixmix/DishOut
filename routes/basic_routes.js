@@ -1,6 +1,6 @@
 var express = require('express')
 var router = express.Router()
-var user = require("../db/users")
+var users = require("../db/users")
 
 
 // Homepage
@@ -14,7 +14,7 @@ router.get('/', function(req, res){
 router.post('/login', function(req, res){
   console.log('### POST /login')
 
-  user.login(
+  users.login(
     req.body.email,
     req.body.password,
     (err, data) => {
@@ -41,7 +41,7 @@ router.get("/logout",function(req,res){
 router.post('/signup', function(req, res){
   console.log('### POST /signup', req.body)
 
-  user.createUser({
+  users.createUser({
       "name": req.body.name,
       "email": req.body.email,
       "password": req.body.password
