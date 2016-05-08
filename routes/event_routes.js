@@ -3,6 +3,7 @@ var router = express.Router()
 var events = require('../db/events')
 var hosts = require("../db/hosts")
 var dishes = require("../db/dishes")
+var guests = require("../db/guests")
 
 // Screen for creating an event
 router.get('/new', function(req, res){
@@ -65,14 +66,20 @@ router.get('/:id/addinfo', function(req, res){
             return
           }
           console.log("Successful getDishesByEventID", dishes)
-          
-          res.render('event_addinfo', {
-            'userId': req.session.userId,
-            'event': event,
-            'dishes': dishes,
-            'guests': [{
-                name: 'Mr. FakeName (this isnt implemented)'
-              }]
+          guests.getGuestsOfEventId(req.params.id,
+            (err, guests) => {
+              if (err) {
+                console.log('Failed to getGuestsOfEventId', err)
+                res.send('Failed to getGuestsOfEventId')
+                return
+              }
+              console.log("Successful getGuestsOfEventId", guests)
+              res.render('event_addinfo', {
+                'userId': req.session.userId,
+                'event': event,
+                'dishes': dishes,
+                'guests': guests
+              })
           })
         })
     })
