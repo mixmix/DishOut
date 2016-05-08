@@ -41,24 +41,35 @@ passport.use(new Strategy({
     profileFields: ['displayName','email']
   },
   function(accessToken, refreshToken,profile,cb){
-    console.log(profile._json.displayName)
+    console.log("here is the user's profile name:",profile._json)
     //create a new fb user if user is not in db,after insert, db will return id, when u get the id, assign it to req.session.userId,
     //if user already exists ,find out the id, and assign to session
     users.getUserByEmail(profile._json.email,function(err,data){
-      console.log(data)
-      if (data[0]){
-        req.session.userId = data.body.id
+      if(err){
+        console.log(" here is the error:", err)
+        return
+      }
+      console.log("here is the getuser data:" , data)
+      if (data){
+        console.log("Made it to user data")
+        cb(data[0])
+        return
       }
       else{
         users.createUser({
-          name:profile._json.displayName,
-          email:profile._json.email
+          name:profile._json.name,
+          email:profile._json.email,
+          password:""
         },function(err,data){
-          req.session.userId = data
+          if (err){
+            console.log("here is the create user error: ",err)
+            return
+          }
+          console.log("in create user", data)
+          cb(data)
         })
       }
     })
-    return cb(null,profile._json)
   }
 ))
 
@@ -93,12 +104,13 @@ app.get('/auth/facebook',
 
 app.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/auth/facebook' }),
-  function(req, res) {
-    console.log('Facebook redirected browser back here (/auth/facebook/callback)'.blue, new Date().toJSON() )
-    console.log('also including an authentication code:'.blue, req.query)
-
+  function(req, res,x) {
+    console.log("wizard!", x)
+    // console.log('Facebook redirected browser back here (/auth/facebook/callback)'.blue, new Date().toJSON() )
+    // console.log('also including an authentication code:'.blue, req.query)
+    console.log("here is the argument length", arguments.length)
     // Successful authentication, redirect home.
-    res.redirect("/user/"+req.session.userId) //userId, req.session.passport
+    //res.redirect("/user/"+req.session.userId) //userId, req.session.passport
   })
 
 //end of passport stuff
