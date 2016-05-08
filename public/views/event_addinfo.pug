@@ -51,7 +51,7 @@ block content
         p You haven't invited any guests
 
     h3 Choose someone to invite:
-    form(method="post" action="/guest/newGuest")
+    form(method="post" action="/guest")
       input(type='hidden',name='eventId' ,value=event.id )
       input(type='text', name='email' placeholder='type guests email')
       input(type='submit', value='Invite Guest')

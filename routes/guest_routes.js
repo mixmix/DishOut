@@ -1,22 +1,25 @@
 var express = require('express')
 var router = express.Router()
-var guest = require('../db/guests')
+var guests = require('../db/guests')
 
-// Add dish to event
-router.post('/', function(req, res){
+// Add guest to an event
+router.post("/", (req, res) => {
   console.log('### POST /guest ')
 
-  res.send('you tried to add a guest. this feature is not implemented yet.')
-})
-
-router.post("/newGuest",function(req,res){
   console.log('req.body',req.body)
-  guest.inviteGuestsByEmail(req.body.email,req.body.eventId,function(err,data){
-    if (err) console.log(err)
-    console.log("Invite data: ", data)
-    res.send("Invite sent!")
+  guests.inviteGuestByEmail({
+    email: req.body.email,
+    eventId: req.body.eventId
+    },
+    (err,data) => {
+      if (err) {
+        console.log('Failed inviteGuestByEmail', err)
+        res.send('Failed inviteGuestByEmail')
+        return
+      }
+      console.log("Successful inviteGuestByEmail", data)
+      res.redirect("/event/" + req.body.eventId + '/addinfo')
   })
-
 })
 
 module.exports = router
