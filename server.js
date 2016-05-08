@@ -4,12 +4,15 @@ var app = express()
 var port = process.env.PORT || 8080
 var passport = require('passport')
 var Strategy = require('passport-facebook').Strategy;
+require('dotenv').config()
 
 var basic_routes = require('./routes/basic_routes')
 var user_routes = require('./routes/user_routes')
 var event_routes = require('./routes/event_routes')
 var dish_routes = require('./routes/dish_routes')
 var guest_routes = require('./routes/guest_routes')
+
+var users = require("./db/users")
 
 var session = require('express-session')
 
@@ -30,15 +33,63 @@ app.use('/user', user_routes)
 app.use('/event', event_routes)
 app.use('/dish', dish_routes)
 
-// passport.use(new Strategy({
-//     clientID:process.env.FBID,
-//     clientSecret:process.env.FBSECRET,
-//     callbackURL: "http://localhost:3000/auth/facebook/callback"
-//   },
-//   function(accessToken, refreshToken,profile,cb){
-//     return cb(null,profile._json)
-//   }
-// ))
+//Passport stuff:
+passport.use(new Strategy({
+    clientID:process.env.FBID,
+    clientSecret:process.env.FBSECRET,
+    callbackURL: "http://localhost:8080/auth/facebook/callback",
+    profileFields: ['email']
+  },
+  function(accessToken, refreshToken,profile,cb){
+    console.log(profile._json)
+    //create a new fb user if user is not in db,after insert, db will return id, when u get the id, assign it to req.session.userId,
+    //if user already exists ,find out the id, and assign to session
+    // users.getUserByEmail()
+    return cb(null,profile._json)
+  }
+))
+
+passport.serializeUser(function(user, cb) {
+  //this gets called around verification
+  console.log("<<  ".green + "I just serialized a user".red, new Date().toJSON() )
+  //console.log("<<  ", user)
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  // this gets called with req.user
+  console.log(">>  ".green + "I just deserialize a user".red)
+  //console.log(">>  ", obj)
+  cb(null, obj);
+});
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+/////////
+
+app.get('/', function (req, res) {
+  console.log("hit the rendering route")
+  res.render('index')
+})
+
+// send to fb to authenticate
+app.get('/auth/facebook',
+  passport.authenticate('facebook', { scope: ['email'] }));
+
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/auth/facebook' }),
+  function(req, res) {
+    console.log('Facebook redirected browser back here (/auth/facebook/callback)'.blue, new Date().toJSON() )
+    console.log('also including an authentication code:'.blue, req.query)
+
+    // Successful authentication, redirect home.
+    res.redirect("/user/"+req.session.userId) //userId, req.session.passport
+  })
+
+//end of passport stuff
+
 
 app.listen(port, function() {
     console.log('Our app is running on http://localhost:' + port + '\n')

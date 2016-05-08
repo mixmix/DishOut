@@ -16,7 +16,7 @@ function createUser(userObj, cb){
   })
 }
 
-function getUserByEmail(email){
+function getUserByEmail(email,cb){
   knex.select().where("email",email).table("users")
     .then( (data) => cb(null, data[0]) )
     .catch( (err) => cb(err) )

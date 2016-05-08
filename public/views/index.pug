@@ -9,7 +9,11 @@ html
     br
     .login
     h3 Login to DishOut
-    form(method='post', action='/login')
+
+    a(href='/auth/facebook')
+      img(border='0', alt='fb', src='http://gratitudebucket.com/grateful/assets/img/facebook_login_1.png', width='220', height='100')
+
+
       p
         input(type='text', name='email', value='', placeholder='Email')
       p
