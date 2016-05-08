@@ -90,16 +90,26 @@ router.get('/:id', function(req, res){
       }
       console.log('Successfully got event', event)
       dishes.getDishesByEventId(req.params.id,
-        (err, dishes) => {
+        (err, dishesByEvent) => {
           if (err) {
-            console.log('Failed to get dishes by event')
+            console.log('Failed to get dishes by event', err)
             res.send('Failed to get dishes by event')
             return
           }
-          console.log('Successfully got dishes', dishes)
-          res.render('event_show', {
-            "event": event,
-            "dishes": dishes
+          console.log('Successfully got dishes', dishesByEvent)
+          dishes.addUserNameToEachDish(dishesByEvent,
+            (err, updatedDishes) => {
+              if (err) {
+                console.log('Failed to add user names to dishes', err)
+                res.send('Failed to add user names to dishes')
+                return
+              }
+              console.log('Successfully got dishes', updatedDishes)
+              res.render('event_show', {
+                "event": event,
+                "dishes": updatedDishes,
+                "userId": req.session.userId
+              })
           })
       })
     })
