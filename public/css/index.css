@@ -38,18 +38,25 @@ body {
 }
 
 h1{
-  font-family:'Roboto', sans-serif;
+  font-family: 'Martel Sans', sans-serif;
   font-weight: 900;
   text-align: center;
   color: #22201f;
   font-size: 60px;
 }
 h2{
+  font-family: 'Martel Sans', sans-serif;
   text-align: center;
 }
 h3{
+  font-family: 'Martel Sans', sans-serif;
   text-align: center;
 }
 h4{
+  font-family: 'Martel Sans', sans-serif;
   text-align: center;
+}
+
+p{
+
 }

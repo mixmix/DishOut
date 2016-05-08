@@ -2,21 +2,19 @@ extends layout
 
 block content
   body
-    
-    h1 User Homepage
-  
-    name Name: #{user.name}
-    br
-    time Email: #{user.email}
-  
-    hr
-  
-    form(method="get" action="/event/new")
-      input(type='submit', value='Create Event')
-    
-    hr
-    
+    .title
+      h1 User Homepage
+    .userDetails    
+      .name
+        name Name: #{user.name}
+      .email 
+        email Email: #{user.email}
+      .submitButton    
+        form(method="get" action="/event/new")
+        input(type='submit', value='Create Event')
+
     .eventsHosting
+      .subtitle
       h3 Events you are Hosting:
       if hostedEvents.length
         each event in hostedEvents
