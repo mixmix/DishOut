@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1 Welcome to DishOut
+  br
+  .login
+  h3 Login to DishOut
+  form(method='post', action='/login')
+    p
+      input(type='text', name='email', value='', placeholder='Email')
+    p
+      input(type='password', name='password', value='', placeholder='Password')
+    p.submit
+      input(type='submit', name='commit', value='Login')
+  br
+  h3 New to DishOut?  Register here
+  form(method='post', action='/signup/')
+    p
+      input(type='text', name='name', value='', placeholder='Name')
+    p
+      input(type='text', name='email', value='', placeholder='Email')
+    p
+      input(type='password', name='password', value='', placeholder='Password')
+    p.submit
+      input(type='submit', name='commit', value='Sign Up')
+  script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')

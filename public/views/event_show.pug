@@ -1,23 +1,34 @@
-html
-  head
-    title GUEST view event page (event/:id)
-    |   
-    link(rel='stylesheet', type='text/css', href='https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css')
-    |   
-    link(rel='stylesheet', type='text/css', href='../css/index.css')
-    |   
-    link(rel='icon', type='img/ico', href='http://www.calvarybelmar.org/wp-content/uploads/2015/06/cc-kitchen-utensils-clip-art-pan.png')
+extends layout
+
+block content
   body
-    h1 GUEST view event page (event/:id)
-    name Name: #{event.name}
-    time Time: #{event.time}
-    date Date: #{event.date}
-    description Desctipion: #{event.description}
-    location Location: #{event.location}
+    .pageTitle
+      h1 GUEST view event page (event/:id)
     
-    hr
+    .eventInfo
+      .name
+        name Name: #{event.name}
+      .time
+        time Time: #{event.time}
+      .date
+        date Date: #{event.date}
+      .description
+        description Desctipion: #{event.description}
+      .location
+        location Location: #{event.location}
     
-    ul
-      each dish in dishes
-        li= 'testingstring ' + dish
+    
+    .guestsDishes
+      .title
+        h2 Dishes Guests need to bring
+      .dishes
+        each dish in dishes
+          .dish
+            .course #{dish.course}
+            if dish.userName
+              .dishUser #{dish.userName}
+            .dishName #{dish.name}
+            form(method='post' action='/dish/claim/' + dish.id + '/' + userId + '/' + event.id)
+              input(type='submit', value='Claim Dish')
+            
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
