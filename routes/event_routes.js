@@ -65,6 +65,7 @@ router.get('/:id/addinfo', function(req, res){
             return
           }
           console.log("Successful getDishesByEventID", dishes)
+          
           res.render('event_addinfo', {
             'userId': req.session.userId,
             'event': event,
