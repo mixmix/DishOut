@@ -38,13 +38,26 @@ passport.use(new Strategy({
     clientID:process.env.FBID,
     clientSecret:process.env.FBSECRET,
     callbackURL: "http://localhost:8080/auth/facebook/callback",
-    profileFields: ['email']
+    profileFields: ['displayName','email']
   },
   function(accessToken, refreshToken,profile,cb){
-    console.log(profile._json)
+    console.log(profile._json.displayName)
     //create a new fb user if user is not in db,after insert, db will return id, when u get the id, assign it to req.session.userId,
     //if user already exists ,find out the id, and assign to session
-    // users.getUserByEmail()
+    users.getUserByEmail(profile._json.email,function(err,data){
+      console.log(data)
+      if (data[0]){
+        req.session.userId = data.body.id
+      }
+      else{
+        users.createUser({
+          name:profile._json.displayName,
+          email:profile._json.email
+        },function(err,data){
+          req.session.userId = data
+        })
+      }
+    })
     return cb(null,profile._json)
   }
 ))
