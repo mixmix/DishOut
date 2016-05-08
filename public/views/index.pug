@@ -21,15 +21,15 @@ block content
         .panel-heading 
           h3 New to DishOut? Register Here
           .panel-body
-            form(method='post', action='/signup/')
+            form(method='post', action='/signup')
               .form-group
-                label(for='exampleInputEmail1') Email address
-                input#exampleInputEmail1.form-control(type='email', name='email' value='', placeholder='Email')
+                label(for='signupname') Your Name
+                input#signupname.form-control(type='text', name='name' value='', placeholder='Name')
               .form-group
-                label(for='exampleInputEmail1') Email address
-                input#exampleInputEmail1.form-control(type='email', name='email' value='', placeholder='Email')
+                label(for='signupemail') Email Address
+                input#signupemail.form-control(type='email', name='email' value='', placeholder='Email')
               .form-group
-                label(for='exampleInputPassword1') Password
-                input#exampleInputPassword1.form-control(type='password', name='password', value='', placeholder='Password')
+                label(for='signuppassword') Password
+                input#signuppassword.form-control(type='password', name='password', value='', placeholder='Password')
                 p
-                button.btn.btn-default(type='submit' name='commit' value='Login') Sign Up
+                button.btn.btn-default(type='submit' name='commit' value='Sign Up') Sign Up
