@@ -25,7 +25,7 @@ block content
         p You haven't decided on any dishes for your guests to bring
 
     h3 Add a Dish You Want Guests To Bring:
-    
+
     form(method="post" action='/dish/' + event.id + "/" + userId)
       select(name="course")
         option(value='Entree') Entree
@@ -54,6 +54,12 @@ block content
     form(method="post" action="/guest")
       input(type='hidden',name='eventId' ,value=event.id )
       input(type='text', name='email' placeholder='type guests email')
+      input(type='submit', value='Invite Guest')
+      hr
+
+    form(method="post" action="/guest/name")
+      input(type='hidden',name='eventId' ,value=event.id )
+      input(type='text', name='name' placeholder='type guests name')
       input(type='submit', value='Invite Guest')
 
     hr
