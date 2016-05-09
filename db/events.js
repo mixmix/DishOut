@@ -15,54 +15,20 @@ module.exports = {
       .catch( (err) => cb(err) )
   },
 
-  getHostedEvents: (userId, cb) => {
-    knex.select().where("userId", userId).table("hosts")
-      .then( (events) => {
-
-        if (!events.length) {
-            cb(null, [])
-            return
-        }
-
-        Promise.all(events.map(function(evt) {
-          return knex.select().where("id", evt.eventId).table("events")
-        }))
-          .then( (events) => {
-
-            if (events[0].length) {
-              cb(null, events.map(evt => evt[0]))
-              return
-            }
-
-            cb(null, [])
-          })
-      })
+  getEventsByHostId: (userId, cb) => {
+    knex('hosts').select()
+      .join('events', 'hosts.eventId', '=', 'events.id')
+      .where('hosts.userId', userId)
+      .then( (data) => cb(null, data) )
       .catch( (err) => cb(err) )
   },
 
-  getGuestedEvents: (userId, cb) => {
-    knex.select().where("userId", userId).table("guests")
-      .then( (events) => {
-
-        if (!events.length) {
-            cb(null, [])
-            return
-        }
-
-        Promise.all(events.map(function(evt) {
-          return knex.select().where("id", evt.eventId).table("events")
-        }))
-          .then( (events) => {
-
-            if (events[0].length) {
-              cb(null, events.map(evt => evt[0]))
-              return
-            }
-
-            cb(null, [])
-          })
-      })
+  getEventsByGuestId: (userId, cb) => {
+    knex('guests').select()
+      .join('events', 'guests.eventId', '=', 'events.id')
+      .where('guests.userId', userId)
+      .then( (data) => cb(null, data) )
       .catch( (err) => cb(err) )
   }
-  
+
 }
