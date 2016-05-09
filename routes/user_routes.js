@@ -1,14 +1,13 @@
 var express = require('express')
 var router = express.Router()
-var users = require('../db/users')
-var events = require("../db/events")
-var guests = require("../db/guests")
+var User = require('../db/users')
+var Event = require("../db/events")
 
 // Users Homepage
 router.get('/:id', function(req, res) {
   console.log('### GET /user/:id', req.session.userId)
 
-  users.getUserById(req.session.userId,
+  User.getUserById(req.session.userId,
     (err, user) => {
       if (err) {
         console.log("Error getUserById from DB", err)
@@ -16,7 +15,7 @@ router.get('/:id', function(req, res) {
         return
       }
       console.log("getUserById returned, now on to getHostedEvents")
-      events.getHostedEvents(req.session.userId,
+      Event.getHostedEvents(req.session.userId,
         (err, host) => {
           if (err) {
             console.log("Error getHostedEvents from DB", err)
@@ -24,7 +23,7 @@ router.get('/:id', function(req, res) {
             return
           }
           console.log("getHostedEvents returned, now on to getGuestedEvents")
-          events.getGuestedEvents(req.session.userId,
+          Event.getGuestedEvents(req.session.userId,
             (err, guest) => {
               if (err) {
                 console.log("Error getTenativeEvents from DB", err)

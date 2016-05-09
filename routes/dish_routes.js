@@ -1,23 +1,26 @@
 var express = require('express')
 var router = express.Router()
-var dishes = require("../db/dishes")
+var Dish = require("../db/dishes")
+var Help = require('../helpers/helpers')
 
 // Add dish to event
 router.post('/:eventId/:userId', function(req, res){
   console.log('### POST /dish/:eventId/:userId')
 
-  dishes.dishAddedByHost({
+  var manyDishObjs = Help.createDishObjs({
     'eventId': req.params.eventId,
     'course': req.body.course,
     'numberOf': req.body.numberOf || 1
-    },
-    (err, dishId) => {
+  })
+
+  Dish.createManyDishes(manyDishObjs,
+    (err, manyDishIds) => {
       if (err) {
         console.log('Failed inserting dish as host', err)
         res.send('Failed inserting dish as host')
         return
       }
-      console.log('Successfully inserted dish as host', dishId)
+      console.log('Successfully inserted dish as host', manyDishIds)
       res.redirect('/event/' + req.params.eventId + '/addinfo')
     })
 })
@@ -25,7 +28,7 @@ router.post('/:eventId/:userId', function(req, res){
 router.post('/claim/:dishId/:userId/:eventId', function(req, res){
   console.log('### POST /dish/claim/:dishId/:userId/:eventId')
 
-  dishes.addGuestToDish({
+  Dish.updateGuest({
     'dishId': req.params.dishId,
     'userId': req.params.userId
     },
@@ -43,7 +46,7 @@ router.post('/claim/:dishId/:userId/:eventId', function(req, res){
 router.post('/name/:dishId/:userId/:eventId', function(req, res){
   console.log('### POST /dish/name/:dishId/:userId/:eventId')
 
-  dishes.addNameToDish({
+  Dish.updateName({
     'dishId': req.params.dishId,
     'userId': req.params.userId,
     'name': req.body.newDishName
