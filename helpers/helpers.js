@@ -25,15 +25,17 @@ module.exports = {
         }
         cb(null, response)
     })
+  },
+
+  createDishObjs: (obj) => {
+    var arr = []
+    for (var i = 0; i < obj.numberOf; i++) {
+      arr.push({
+        'eventId': obj.eventId,
+        'course': obj.course
+      })
+    }
+    return arr
   }
 
 }
-//
-// var num = parseInt(dishObj.numberOf) || 1
-// var arr = []
-// for (var i = 0; i < num; i++) {
-//   arr.push({
-//             'eventId': dishObj.eventId,
-//             'course': dishObj.course
-//           })
-// }

@@ -1,14 +1,13 @@
 var express = require('express')
 var router = express.Router()
-var users = require('../db/users')
-var events = require("../db/events")
-var guests = require("../db/guests")
+var User = require('../db/users')
+var Event = require("../db/events")
 
 // Users Homepage
 router.get('/:id', function(req, res) {
   console.log('### GET /user/:id', req.session.userId)
 
-  users.getUserById(req.session.userId,
+  User.getUserById(req.session.userId,
     (err, user) => {
       if (err) {
         console.log("Error getUserById from DB", err)
@@ -16,35 +15,31 @@ router.get('/:id', function(req, res) {
         return
       }
       console.log("getUserById returned, now on to getHostedEvents")
-      events.getHostedEvents(req.session.userId,
-        (err, host) => {
+      Event.getEventsByHostId(req.session.userId,
+        (err, hosting) => {
           if (err) {
-            console.log("Error getHostedEvents from DB", err)
-            res.send('Failed getHostedEvents')
+            console.log("Error getEventsByHostId", err)
+            res.send('Failed getEventsByHostId')
             return
           }
-          console.log("getHostedEvents returned, now on to getGuestedEvents")
-          events.getGuestedEvents(req.session.userId,
-            (err, guest) => {
+          console.log("Successful getEventsByHostId", hosting)
+          Event.getEventsByGuestId(req.session.userId,
+            (err, attending) => {
               if (err) {
-                console.log("Error getTenativeEvents from DB", err)
-                res.send('Failed getTenativeEvents')
+                console.log("Error getEventsByGuestId", err)
+                res.send('Failed getEventsByGuestId')
                 return
               }
-              console.log("Successful getting Users Events", host, guest)
+              console.log("Successful getEventsByGuestId", attending)
               res.render('user_show',
                 {
                   'user': user,
-                  'hostedEvents': host,
-                  'guestedEvents': guest
+                  'hostedEvents': hosting,
+                  'guestedEvents': attending
                 })
             })
         })
     })
-})
-
-router.get('/:id/edit', function (req, res) {
-  res.end('temp before we write user/:id/edit')
 })
 
 module.exports = router

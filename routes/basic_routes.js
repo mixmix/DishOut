@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var User = require("../db/users")
-var helpers = require("../helpers/helpers")
+var Help = require("../helpers/helpers")
 
 module.exports = function (app, passport) {
   app.post('/signup', passport.authenticate('local-signup', {
@@ -23,7 +23,7 @@ router.get('/', function(req, res){
 router.post('/login', function(req, res){
   console.log('### POST /login')
 
-  helpers.hashUserObj(req.body,
+  Help.hashUserObj(req.body,
     (err, postHash) => {
       if (err) {
         console.log('Failed hash', err)
@@ -52,5 +52,27 @@ router.get("/logout",function(req,res){
   req.session.destroy()
   res.redirect("/")
 })
+
+
+// // Signup
+// router.post('/signup', function(req, res){
+//   console.log('### POST /signup', req.body)
+
+//   User.createUser({
+//       "name": req.body.name,
+//       "email": req.body.email,
+//       "password": req.body.password
+//     },
+//     (err, userId) => {
+//       if (err) {
+//         console.log("Failed signup", err)
+//         res.send('Failed signup')
+//         return
+//       }
+//       console.log("successful signup", userId)
+//       req.session.userId = userId
+//       res.redirect('/user/' + req.session.userId)
+//     })
+// })
 
 

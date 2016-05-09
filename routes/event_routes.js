@@ -89,7 +89,7 @@ router.get('/:id/addinfo', function(req, res){
 router.get('/:id', function(req, res){
   console.log('### GET /event/:id')
 
-  events.getEventById(req.params.id,
+  Event.getEventById(req.params.id,
     (err, event) => {
       if (err) {
         console.log('Failed to get event by id', err)
@@ -97,7 +97,7 @@ router.get('/:id', function(req, res){
         return
       }
       console.log('Successfully got event', event)
-      dishes.getDishesByEventId(req.params.id,
+      Dish.getDishesByEventId(req.params.id,
         (err, dishesByEvent) => {
           if (err) {
             console.log('Failed to get dishes by event', err)
@@ -105,7 +105,7 @@ router.get('/:id', function(req, res){
             return
           }
           console.log('Successfully got dishes', dishesByEvent)
-          dishes.addUserNameToEachDish(dishesByEvent,
+          Dish.updateUserNameOfMany(dishesByEvent,
             (err, updatedDishes) => {
               if (err) {
                 console.log('Failed to add user names to dishes', err)
