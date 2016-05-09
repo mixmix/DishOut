@@ -1,22 +1,21 @@
 
-#homeWrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  background-image: url("../images/food.jpg");
-}
-
-h1 {
+body {
+    margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    background: url("../images/food.jpg") no-repeat center center fixed;
 
 }
 
+.full {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
 
-.jumbotron {
-  margin-top: 8%;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 30px;
+.col-centered {
+    float: none;
+    margin: 0 auto;
+    max-width: 30em;
 }
 
 .login {
@@ -35,37 +34,23 @@ h1 {
 .submitButton {
   display: flex;
   justify-content: center;
-
-.entry{
-  background: rgb(66, 66, 186);
-  padding: 20px;
 }
 
-.header, .entry{
-  display: flex;
-  justify-content: space-around;
+.jumbotron {
+  margin-top: 8%;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 2em
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
-h1{
+h1 {
   font-family: 'Martel Sans', sans-serif;
   font-weight: 900;
   text-align: center;
-  color: #22201f;
-  font-size: 60px;
-}
-h2{
-  font-family: 'Martel Sans', sans-serif;
-  text-align: center;
-}
-h3{
-  font-family: 'Martel Sans', sans-serif;
-  text-align: center;
-}
-h4{
-  font-family: 'Martel Sans', sans-serif;
-  text-align: center;
 }
 
-p{
-
+h2, h3, h4{
+  text-align: center;
 }

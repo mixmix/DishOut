@@ -2,22 +2,24 @@ extends layout
 
 block content
   body
-    .title
-      h1 HOST create new event page (event/new)
-    
-    .login
-      h2 Add Event Information
-    form(action='/event' method='post')
-      Event Name:
-      input(type='text', name='name', placeholder='type event name here')
-        Date:
-      input(type='text', name='date', placeholder='type event date here')
-        Time:
-      input(type='text', name='time', placeholder='type event name here')
-        Description:
-      input(type='text', name='description', placeholder='type brief event description here')
-        Location:
-      input(type='text', name='location', placeholder='type event location here')
-      input(type='submit', value='Submit')
-
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js')
+  .container
+    .row
+      .col-md-4
+      .col-centered
+        .title
+          h1 HOST create new event page (event/new)
+        
+        .login
+          h2 Add Event Information
+        form(action='/event' method='post')
+          Event Name:
+          input(type='text', name='name', placeholder='type event name here')
+          | Date:
+          input(type='text', name='date', placeholder='type event date here')
+          | Time:
+          input(type='text', name='time', placeholder='type event name here')
+          | Description:
+          input(type='text', name='description', placeholder='type brief event description here')
+          | Location:
+          input(type='text', name='location', placeholder='type event location here')
+          input(type='submit', value='Submit')
