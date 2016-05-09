@@ -35,12 +35,13 @@ module.exports = function(passport){
               var newUser = {
                 name:req.body.name,
                 email:email,
-                hashedPassword: password,
+                password: password,
               }
                helpers.hashUserObj(newUser, function(err,hashedUser){
                   createUser(hashedUser,function(err,data){
                     if(err) console.log(err)
                     console.log("user successfully create: ", hashedUser)
+                    return done(null,hashedUser)
                   })
               })
             }
