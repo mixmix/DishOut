@@ -10,13 +10,10 @@ module.exports = {
           cb(err)
           return
         }
-        var postHash = {
-          "name": preHash.name,
-          "email": preHash.email,
-          "hashedPassword": hash
-        }
+        var postHash = Object.assign({}, preHash)
+        postHash.password = hash
         cb(null, postHash)
-    }
+    })
   },
 
   unhashUserObj : (userObj) => {
@@ -31,3 +28,12 @@ module.exports = {
   }
 
 }
+//
+// var num = parseInt(dishObj.numberOf) || 1
+// var arr = []
+// for (var i = 0; i < num; i++) {
+//   arr.push({
+//             'eventId': dishObj.eventId,
+//             'course': dishObj.course
+//           })
+// }

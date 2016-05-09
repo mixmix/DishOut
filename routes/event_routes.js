@@ -1,9 +1,9 @@
 var express = require('express')
 var router = express.Router()
-var events = require('../db/events')
-var hosts = require("../db/hosts")
-var dishes = require("../db/dishes")
-var guests = require("../db/guests")
+var Event = require('../db/events')
+var Host = require("../db/hosts")
+var Dish = require("../db/dishes")
+var Guest = require("../db/guests")
 
 // Screen for creating an event
 router.get('/new', function(req, res){
@@ -16,7 +16,7 @@ router.get('/new', function(req, res){
 router.post('/', function(req, res) {
   console.log('### POST /event ')
 
-  events.createEvent({
+  Event.createEvent({
       "name": req.body.name,
       "date": req.body.date,
       "time": req.body.time,
@@ -30,7 +30,7 @@ router.post('/', function(req, res) {
         return
       }
       console.log('Event successfully created', eventId, req.session.userId)
-      hosts.addHostOfEvent({
+      Host.createHost({
         'eventId': eventId,
         'userId': req.session.userId
         },
@@ -50,7 +50,7 @@ router.post('/', function(req, res) {
 router.get('/:id/addinfo', function(req, res){
   console.log('### GET /event/:id/addinfo')
 
-  events.getEventById(req.params.id,
+  Event.getEventById(req.params.id,
     (err, event) => {
       if (err) {
         console.log('Failed to retrieve event by eventID ', err)
@@ -58,7 +58,7 @@ router.get('/:id/addinfo', function(req, res){
         return
       }
       console.log("Successful getEventById", event)
-      dishes.getDishesByEventId(req.params.id,
+      Dish.getDishesByEventId(req.params.id,
         (err, dishes) => {
           if (err) {
             console.log('Failed to retrieve dishes by eventID ', err)
@@ -66,7 +66,7 @@ router.get('/:id/addinfo', function(req, res){
             return
           }
           console.log("Successful getDishesByEventID", dishes)
-          guests.getGuestsOfEventId(req.params.id,
+          Guest.getGuestsByEventId(req.params.id,
             (err, guests) => {
               if (err) {
                 console.log('Failed to getGuestsOfEventId', err)
