@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var User = require("../db/users")
-var helpers = require("../helpers/helpers")
+var Help = require("../helpers/helpers")
 
 // Homepage
 router.get('/', function(req, res){
@@ -14,7 +14,7 @@ router.get('/', function(req, res){
 router.post('/login', function(req, res){
   console.log('### POST /login')
 
-  helpers.hashUserObj(req.body,
+  Help.hashUserObj(req.body,
     (err, postHash) => {
       if (err) {
         console.log('Failed hash', err)
@@ -48,7 +48,7 @@ router.get("/logout",function(req,res){
 router.post('/signup', function(req, res){
   console.log('### POST /signup', req.body)
 
-  users.createUser({
+  User.createUser({
       "name": req.body.name,
       "email": req.body.email,
       "password": req.body.password

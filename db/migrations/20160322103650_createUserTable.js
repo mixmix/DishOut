@@ -8,12 +8,11 @@ exports.up = function(knex, Promise) {
     table.string('password')
   }),
   knex.schema.createTableIfNotExists('hosts', function(table) {
-    // table.increments('eventId')
+    table.increments('id')
     table.integer('eventId')
     table.integer('userId')
   }),
  knex.schema.createTableIfNotExists('guests', function(table) {
-    // table.increments('eventId')
     table.increments('id')
     table.integer('eventId')
     table.integer('userId')
