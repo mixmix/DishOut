@@ -13,7 +13,7 @@ module.exports = {
         var postHash = {
           "name": preHash.name,
           "email": preHash.email,
-          "hashedPassword": hash
+          "password": hash
         }
         cb(null, postHash)
     }

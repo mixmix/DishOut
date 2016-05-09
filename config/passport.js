@@ -35,7 +35,7 @@ module.exports = function(passport){
               var newUser = {
                 name:req.body.name,
                 email:email,
-                password: password,
+                password: password
               }
                helpers.hashUserObj(newUser, function(err,hashedUser){
                   createUser(hashedUser,function(err,data){
