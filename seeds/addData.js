@@ -4,15 +4,15 @@ exports.seed = function(knex, Promise) {
     knex('users').del(),
 
     // user s seed
-    knex('users').insert({name: 'Bill',email:"b@b.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Ezra', email:"e@e.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Ben', email:"s@s.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Tom', email:"t@t.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Jill', email:"j@j.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Steve', email:"a@a.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Bob', email:"bob@bob.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Harry', email:"h@h.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
-    knex('users').insert({name: 'Eve', email:"z@z.com", hashedPassword:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Bill',email:"b@b.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Ezra', email:"e@e.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Ben', email:"s@s.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Tom', email:"t@t.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Jill', email:"j@j.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Steve', email:"a@a.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Bob', email:"bob@bob.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Harry', email:"h@h.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
+    knex('users').insert({name: 'Eve', email:"z@z.com", password:"$2a$10$OWjL8xHahX6Q7iRzhgpcuObksiGNZgipYasHa1Vlwq954ZhzaAnVe"}),
 
 
     // Deletes ALL existing entries

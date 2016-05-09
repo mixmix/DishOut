@@ -1,7 +1,7 @@
 var express = require('express')
 var router = express.Router()
-var users = require("../db/users")
-
+var User = require("../db/users")
+var helpers = require("../helpers/helpers")
 
 // Homepage
 router.get('/', function(req, res){
@@ -14,19 +14,26 @@ router.get('/', function(req, res){
 router.post('/login', function(req, res){
   console.log('### POST /login')
 
-  users.login(
-    req.body.email,
-    req.body.password,
-    (err, data) => {
+  helpers.hashUserObj(req.body,
+    (err, postHash) => {
       if (err) {
-        console.log("Failed to login", err)
-        res.send('Failed login')
+        console.log('Failed hash', err)
         return
       }
-      console.log("Successful login")
-      req.session.userId = data.id
-      res.redirect('/user/' + data.id)
-    })
+      console.log('Successful hash', postHash)
+      User.getUserByEmail(postHash.email,
+        (err, userObj) => {
+          if (err) {
+            console.log('Failed getUserByEmail', err)
+            return
+          }
+          console.log('Successful getUserByEmail', userObj)
+
+          console.log("Successful login with id", userObj.id)
+          req.session.userId = userObj.id
+          res.redirect('/user/' + userObj.id)
+        })
+  })
 })
 
 // Logout

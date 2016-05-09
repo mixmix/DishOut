@@ -5,7 +5,7 @@ exports.up = function(knex, Promise) {
     table.increments('id')
     table.string('name')
     table.string('email').unique()
-    table.string('hashedPassword')
+    table.string('password')
   }),
   knex.schema.createTableIfNotExists('hosts', function(table) {
     // table.increments('eventId')
